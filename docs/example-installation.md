@@ -1,9 +1,12 @@
 This page shows 1. how to install BOUT++ on Cirrus, and 2. how to install and set-up SmartSim so that in can communicate with BOUT++.
 
+[back](./)
+
 # 1. BOUT++
 
 (copy from gitlab)
 
+[back](./)
 
 # 2. SmartSim with BOUT++
 

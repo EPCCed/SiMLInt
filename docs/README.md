@@ -26,7 +26,7 @@ Activate the conda environment with SmartSim (see Cirrus example to make sure it
 conda activate myvenv
 ```
 
-Export the (trained) ML model in a format suitable for SmartSim. 
+Export the (trained) ML model to a format suitable for SmartSim. 
 
 In the small test example, we are using a grid 128x256 with 4 guard cells in the x-dimension, hence our model expects a grid of size (132, 256). To demonstrate the workflow, we use a model that returns a tensor of 0s, this allows the user to easily verify that the added ML-loop does not distort the simulation in any unexpected way. 
 

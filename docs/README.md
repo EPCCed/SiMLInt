@@ -35,6 +35,16 @@ We demonstrate the workflow on the Hasegawa-Wakatani set of equations using a du
 
 ## Model training
 
-*conceptual description*
+The example workflow uses a model that returns always 0s for the correction, maintaining the simulation on the same trajectory it would follow without any ML adjustments. The idea of Learned Correction however requires a model that is trained to predict the difference between the fully resolved trajectory that runs over a sufficiently fine resolution of the domain and a trajectory that uses coarser domain decomposition (and coarser time steps). To obtain a suitable ML model, we need to generate training data and use it to train the model.
+
+The data generation schema below outlines the kind of data we need to collect for the model training --- we need to:
+1. run a fully resolved simulation (denoted F)
+2. coarsen some points on the fine trajectory (denoted C) -- these are *inputs* for the training process
+3. make a coarse simulation step from C (denoted by the arrow labelled \Delta t_c)
+4. calculate the difference between the fully resolved, coarsened grid and the coarse grid at the equivalent simulation step -- this is the *target* to train the model for
+
+![Data Generation](https://github.com/EPCCed/SiMLInt/blob/docs/docs/assets/data_generation_schema.pdf)
+
+The dataset we have created for the Hasegawa-Wakatani example, based on 32,000 fully resolved points and, in the coarsened state prepared for the ML training, taking XXX GB, is available on request.
 
 [Implementation details](./ML_training.md)

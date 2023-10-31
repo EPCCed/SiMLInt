@@ -1,3 +1,6 @@
 # Data generation and ML training
 
-Work in progress.
+Both the data generation as well as the model construction and training is very problem specific. 
+
+
+*Work in progress.*

@@ -18,7 +18,7 @@ In order to set up the workflow, you first need to install these tools in the ve
 We demonstrate the workflow on the Hasegawa-Wakatani set of equations using a dummy ML-model which does not affect the simulation. This allows you to test that the set-up works and returns the expected results. 
 
 
-### Export zero model
+### Export the ML model
 
 Activate the conda environment with SmartSim (see Cirrus example to make sure it has all relevant packages)
 ```
@@ -27,8 +27,7 @@ conda activate myvenv
 
 Export the (trained) ML model in a format suitable for SmartSim. 
 
-In our example we are using a grid 128x256 with 4 guard cells in the x dimension, hence our model expects a grid of size (132, 256). Here we use a model that returns all zeros to ..., so we create
-`zero_model-132-256.pb` in the current directory:
+In the small test example we are using a grid 128x256 with 4 guard cells in the x dimension, hence our model expects a grid of size (132, 256). Here we use a model that returns all zeros to ..., so we create `zero_model-132-256.pb` in the current directory:
 ```
 python write_zero_model.py 132 256 -f zero-model-132-256.pb
 ```
@@ -44,21 +43,22 @@ This launches a database, uploads the zero model and inputs a random tensor, ret
 
 ### Compile Hasegawa Wakatani with SmartRedis
 
-Load modules
+Hasegawa-Wakatani comes included among BOUT++ examples and gets downloaded to the system during BOUT++ installation.
+
+With `myvenv` still active, load the following modules:
 ```
-module load mpt
-module load intel-compilers-19
 module load fftw/3.3.10-intel19-mpt225
 module load netcdf-parallel/4.6.2-intel19-mpt225
 module load cmake
 ```
 
-Modify `CMakeLists.txt` and `hw.cxx`.
-
-Outside the BOUT-dev root directory you can set the location of the BOUT++ build path for CMake:
+Outside the BOUT-dev root directory you can set the location of the BOUT++ build path for CMake
 ```
 cmake . -B build -Dbout++_DIR=/PATH/TO/BOUT-dev/build -DCMAKE_CXX_FLAGS=-std=c++17 -DCMAKE_BUILD_TYPE=Release
 ```
+
+Compile the Hasegawa-Wakatani example. Note that for this step you need to have updated the `CMakeLists.txt` and `hw.cxx` files within the Hasegawa-Wakatani example.
+The `CMakeLists.txt` needs to point to the path to the SmartRedis libraries, while the changes to `hw.cxx` do *something*. You can see examples of those modified files *here*.
 
 Compile:
 ```

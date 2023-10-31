@@ -28,6 +28,8 @@ The diagram below visualises the workflow. The numerical simulation, run in BOUT
  
 ![SiMLInt workflow](https://github.com/EPCCed/SiMLInt/blob/docs/docs/assets/SiMLInt_workflow.pdf)
 
+![workflow](/assets/SiMLInt_workflow.pdf)
+
 
 We demonstrate the workflow on the Hasegawa-Wakatani set of equations using a dummy ML-model which does not affect the simulation. This allows the users to test that the set-up works and returns the expected results. 
 

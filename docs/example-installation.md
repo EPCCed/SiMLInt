@@ -1,4 +1,9 @@
-# Example installation on Cirrus
+# BOUT++
+
+(copy from gitlab)
+
+
+# SmartSim with BOUT++
 
 ## Python/conda stuff 
 Follow [Cirrus docs](https://docs.cirrus.ac.uk/user-guide/python/#installing-your-own-python-packages-with-conda)

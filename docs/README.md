@@ -68,7 +68,7 @@ Compile your version of Hasegawa-Wakatani example. `my-bout-smartsim` should con
 cmake --build build --target hasegawa-wakatani
 ```
 
-### Set up SmartRedis
+### Set up SmartRedis manually
 
 *Do this only if you are having a manual play.*
 
@@ -86,7 +86,7 @@ You can now run your simulation in `my-bout-smartsim`
 ```
 
 
-### Run with SmartRedis database
+### Run using the scheduler
 
 The slurm job file starts the SmartSim orchestrator (in Python) with a Redis database and RedisAI communication layer.
 The environment variable SSDB points to the database entrypoint to which the simulation connects.

@@ -18,54 +18,29 @@ In order to set up the workflow, you first need to install these tools in the ve
 We demonstrate the workflow on the Hasegawa-Wakatani set of equations using a dummy ML-model which does not affect the simulation. This allows you to test that the set-up works and returns the expected results. 
 
 
-
-### Set up environment (with Intel-19 compiler)
-
-```
-eval "$(/work/d175/d175/PATH_TO_MINICONDA shell.bash hook)"
-conda create --prefix /work/d175/d175/ENVPATH python=3.9
-conda activate /work/d175/d175/ENVPATH
-conda install git-lfs
-git lfs install
-conda install cmake
-pip install smartsim[ml]
-```
-
-Build:
-
-```
-module load mpt
-module load intel-compilers-19
-export CC=mpicc
-export CXX=mpicxx
-
-smart build --device cpu  
-```
-
-### Build SmartRedis libraries
-
-Clone the git repo and the required version and build:
-```
-git clone https://github.com/CrayLabs/SmartRedis.git --branch v0.4.1 smartredis
-cd smartredis
-make lib
-```
-
-The install path is then available in `smartredis/install` and the `CMakeLists.txt` file points to this path.
-
 ### Export zero model
 
-Activate the miniconda environment with SmartSim.
+Activate the conda environment with SmartSim (see Cirrus example to make sure it has all relevant packages)
+```
+conda activate myvenv
+```
 
-Write the zero model with grid size (132, 256) to a file `zero_model-132-256.pb` in the current directory:
+Export the (trained) ML model in a format suitable for SmartSim. 
+
+In our example we are using a grid 128x256 with 4 guard cells in the x dimension, hence our model expects a grid of size (132, 256). Here we use a model that returns all zeros to ..., so we create
+`zero_model-132-256.pb` in the current directory:
 ```
 python write_zero_model.py 132 256 -f zero-model-132-256.pb
 ```
 
-Test the zero model. This launches a database, uploads the zero model and inputs a random tensor, should return zeroes.
+The `write_zero_model.py` defines a simple CNN which returns all zeros... 
+Note that the script requires also `padding.py`, which is our in-house implementation of periodic padding, which is not currently implemented in TensorFlow.
+
+You can now test the zero model:
 ```
 python zero_model_test.py
 ```
+This launches a database, uploads the zero model and inputs a random tensor, returning a tensor of the same size, containing only zeroes. The output gets printed on screen.
 
 ### Compile Hasegawa Wakatani with SmartRedis
 

@@ -52,30 +52,39 @@ module load netcdf-parallel/4.6.2-intel19-mpt225
 module load cmake
 ```
 
-Outside the BOUT-dev root directory you can set the location of the BOUT++ build path for CMake
+Make a working copy of the hasegawa-wakatani example outside the BOUT-dev root directory
 ```
-cmake . -B build -Dbout++_DIR=/PATH/TO/BOUT-dev/build -DCMAKE_CXX_FLAGS=-std=c++17 -DCMAKE_BUILD_TYPE=Release
+cp -r BOUT-dev/examples/hasegawa-wakatani my-bout-smartsim
+cd my-bout-smartsim
 ```
 
-Compile the Hasegawa-Wakatani example. Note that for this step you need to have updated the `CMakeLists.txt` and `hw.cxx` files within the Hasegawa-Wakatani example.
-The `CMakeLists.txt` needs to point to the path to the SmartRedis libraries, while the changes to `hw.cxx` implement the call onto the SmartRedis database and the ML model, and receives and actions the correction to the simulation. You can see examples of those modified files *here*.
+Set the location of the BOUT++ build path for CMake
+```
+cmake . -B build -Dbout++_DIR=../BOUT-dev/build -DCMAKE_CXX_FLAGS=-std=c++17 -DCMAKE_BUILD_TYPE=Release
+```
 
-Compile:
+Compile your version of Hasegawa-Wakatani example. `my-bout-smartsim` should contain (among others) `CMakeLists.txt` and `hw.cxx` which you need to modify --- The `CMakeLists.txt` needs to point to the path to the SmartRedis libraries as discussed in *link*, while the changes to `hw.cxx` implement the call onto the SmartRedis database and the CNN within, and receives and actions the correction to the simulation. You can see examples of the modified files *here*.
 ```
 cmake --build build --target hasegawa-wakatani
 ```
 
-### Python script to start database and upload zero model
+### Set up SmartRedis
 
-The python script `start_db.py` starts the RedisAI database and uploads the zero model.
-This script must be run before the simulation starts (or both added to an orchestrator).
+*Do this only if you are having a manual play.*
 
-Change the model path in line 18.
+The python script `start_db.py` starts the RedisAI database and uploads the ML model specified as the script's argument, together with the port where the database will be available. This script must be run before the simulation starts (or both added to an orchestrator).
 
-To start the database at port 6899:
+To start the database at port 6899 with the zero model created earlier, run
 ```
 python start_db.py 6899 /path/to/zero-model-132-256.pb
+export SSDB=127.0.0.1:6899
 ```
+
+You can now run your simulation in `my-bout-smartsim`
+```
+./hasegawa-wakatani
+```
+
 
 ### Run with SmartRedis database
 

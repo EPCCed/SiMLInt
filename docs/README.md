@@ -1,6 +1,5 @@
-SiMLInt is an [ExCALIBUR](https://excalibur.ac.uk/) project demonstrating how to integrate Machine Learning (ML) to physics simulations. It combines commonly used, open-source tools and few in-house Python scripts to execute ML-aided computational fluid dynamics simulations. This page explains how to set-up the workflow to apply the same techniques to other simulations, possibly using a different set of tools.
+SiMLInt is an [ExCALIBUR](https://excalibur.ac.uk/) project demonstrating how to integrate Machine Learning (ML) to physics simulations. It combines commonly used, open-source tools and few in-house Python scripts to execute ML-aided computational fluid dynamics simulations. This page explains how to set-up the workflow to apply the same techniques to other simulations.
 
-SiMLInt workflow is currently based on [Learned Correction](https://www.pnas.org/doi/full/10.1073/pnas.2101784118) (LC), where the system is simulated with a coarser-than-optimal resolution, and the error resulting from this under-resolution is frequently corrected using an convolutional neural network (CNN), which is trained to predict the difference between the coarse and the fully-resolved simulation. 
 
 ## Codes and Dependencies
 
@@ -16,9 +15,21 @@ For this step, it is best to follow the tool's installing instructions; however,
 
 ## Workflow
 
-We demonstrate the workflow on the Hasegawa-Wakatani set of equations using a dummy ML-model which does not affect the simulation. This allows you to test that the set-up works and returns the expected results. 
+SiMLInt workflow is currently based on [Learned Correction](https://www.pnas.org/doi/full/10.1073/pnas.2101784118) (LC). 
 
-*include conceptual description of the workflow*
+The numerical solver is used to simulate a system, with adapted parameters so that the system is under-resolved due to the domain being decomposed to a coarser level than would be optimal. Beyond this, the execution of the simulation remains unchanged and can be parallelised as usual.
+
+The coarse granularity of the domain decomposition means the simulation would diverge from the real evolution of the system. To prevent this, the workflow uses a pretraind ML model to adjust the grid at every step of the simulation, keeping the system on the right track.
+
+The ML model is often based on a convolutional neural network (CNN), and is trained to predict the difference between the coarse simulation step and a fully-resolved state, coarsened to match the grid dimensions. Notably, the workflow can be used in a parallelised scenario, where the the correction inference is performed in each parallel process separately, using the partial domain as the ML model's input, and using the model's prediction to correct only that slice.
+
+
+The diagram below visualises the workflow. The numerical simulation, run in BOUT++, is represented by the black squares and grids, while the Learned Correction loop is realised in SmartSim by calling a TensorFlow model, which returns the correction (orange grid).
+ 
+![SiMLInt workflow](https://github.com/EPCCed/SiMLInt/blob/docs/docs/assets/SiMLInt_workflow.pdf)
+
+
+We demonstrate the workflow on the Hasegawa-Wakatani set of equations using a dummy ML-model which does not affect the simulation. This allows the users to test that the set-up works and returns the expected results. 
 
 [Detailed instructions](./workflow.md)
 

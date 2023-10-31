@@ -66,7 +66,7 @@ Set the location of the BOUT++ build path for CMake
 cmake . -B build -Dbout++_DIR=../BOUT-dev/build -DCMAKE_CXX_FLAGS=-std=c++17 -DCMAKE_BUILD_TYPE=Release
 ```
 
-Compile your version of Hasegawa-Wakatani example. `my-bout-smartsim-hw` should contain (among others) `CMakeLists.txt` and `hw.cxx` which you need to modify --- The `CMakeLists.txt` needs to point to the path to the SmartRedis libraries as discussed in [the example installation](https://github.com/EPCCed/SiMLInt/blob/docs/docs/example-installation.md#build-smartredis-libraries), while the changes to `hw.cxx` implement the call onto the SmartRedis database and the CNN within, and receives and actions the correction to the simulation. You can see examples of the modified files in [files/modified_HW](files/modified_HW).
+Compile your version of Hasegawa-Wakatani example. `my-bout-smartsim-hw` should contain (among others) `CMakeLists.txt` and `hw.cxx` which you need to modify --- The `CMakeLists.txt` needs to point to the path to the SmartRedis libraries as discussed in [the example installation](https://github.com/EPCCed/SiMLInt/blob/docs/docs/example-installation.md#build-smartredis-libraries), while the changes to `hw.cxx` implement the call onto the SmartRedis database and the CNN within, and receives and actions the correction to the simulation. You can see examples of the modified files in [files/modified_HW](https://github.com/EPCCed/SiMLInt/tree/docs/files/modified_HW).
 ```
 cmake --build build --target hasegawa-wakatani
 ```
@@ -89,7 +89,7 @@ cd my-bout-smartsim-hw
 ./hasegawa-wakatani
 ```
 
-An example script that can be used on Cirrus can be found in [files/run_SmartSim/submit-hw.sh](docs/files/run_SmartSim/submit-hw.sh)
+An example script that can be used on Cirrus can be found in [docs/files/run_SmartSim/submit-hw.sh](https://github.com/EPCCed/SiMLInt/blob/docs/files/run_SmartSim/submit-hw.sh)
 
 This slurm job file starts the SmartSim orchestrator (in Python) with a Redis database and RedisAI communication layer.  In this example, the Redis DB runs on the same node since the simulation only runs in one process.
 

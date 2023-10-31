@@ -26,9 +26,7 @@ The ML model is often based on a convolutional neural network (CNN), and is trai
 
 The diagram below visualises the workflow. The numerical simulation, run in BOUT++, is represented by the black squares and grids, while the Learned Correction loop is realised in SmartSim by calling a TensorFlow model, which returns the correction (orange grid).
  
-![SiMLInt workflow](https://github.com/EPCCed/SiMLInt/blob/docs/docs/assets/SiMLInt_workflow.pdf)
-
-![workflow](./assets/SiMLInt_workflow.pdf)
+![SiMLInt workflow](./assets/SiMLInt_workflow.pdf)
 
 
 We demonstrate the workflow on the Hasegawa-Wakatani set of equations using a dummy ML-model which does not affect the simulation. This allows the users to test that the set-up works and returns the expected results. 
@@ -45,7 +43,7 @@ The data generation schema below outlines the kind of data we need to collect fo
 3. make a coarse simulation step from C (denoted by the arrow labelled \Delta t_c)
 4. calculate the difference between the fully resolved, coarsened grid and the coarse grid at the equivalent simulation step -- this is the *target* to train the model for
 
-![Data Generation](https://github.com/EPCCed/SiMLInt/blob/docs/docs/assets/data_generation_schema.pdf)
+![Data Generation](./assets/data_generation_schema.pdf)
 
 The dataset we have created for the Hasegawa-Wakatani example, based on 32,000 fully resolved points and, in the coarsened state prepared for the ML training, taking XXX GB, is available on request.
 

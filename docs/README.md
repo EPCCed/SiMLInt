@@ -40,8 +40,8 @@ The example workflow uses a model that returns always 0s for the correction, mai
 The data generation schema below outlines the kind of data we need to collect for the model training --- we need to:
 1. run a fully resolved simulation (denoted F)
 2. coarsen some points on the fine trajectory (denoted C) -- these are *inputs* for the training process
-3. make a coarse simulation step from C (denoted by the arrow labelled \Delta t_c)
-4. calculate the difference between the fully resolved, coarsened grid and the coarse grid at the equivalent simulation step -- this is the *target* to train the model for
+3. make a coarse simulation step from C (denoted by the arrow labelled ∆t_c)
+4. calculate the difference between the fully resolved, coarsened grid and the coarse grid (denoted Ĉ at the equivalent simulation step -- this is the *target* to train the model for
 
 ![Data Generation](./assets/data_generation_schema.pdf)
 

@@ -58,7 +58,7 @@ cmake . -B build -Dbout++_DIR=/PATH/TO/BOUT-dev/build -DCMAKE_CXX_FLAGS=-std=c++
 ```
 
 Compile the Hasegawa-Wakatani example. Note that for this step you need to have updated the `CMakeLists.txt` and `hw.cxx` files within the Hasegawa-Wakatani example.
-The `CMakeLists.txt` needs to point to the path to the SmartRedis libraries, while the changes to `hw.cxx` do *something*. You can see examples of those modified files *here*.
+The `CMakeLists.txt` needs to point to the path to the SmartRedis libraries, while the changes to `hw.cxx` implement the call onto the SmartRedis database and the ML model, and receives and actions the correction to the simulation. You can see examples of those modified files *here*.
 
 Compile:
 ```

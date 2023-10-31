@@ -16,7 +16,7 @@ In order to set up the workflow, you need to install a ...
 
 To get these installed to your system, we suggest you follow the developers' instructions, however,we provide an example step-by-step instructions and expected outcomes for installing these on [Cirrus](https://www.cirrus.ac.uk).
 
-> [Example installation on Cirrus](./example-installation)
+> [Example installation on Cirrus](./example-installation.md)
 
 ## Workflow
 

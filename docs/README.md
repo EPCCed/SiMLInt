@@ -9,7 +9,8 @@ Our example workflow uses the following tools:
 * [TensorFlow](https://www.tensorflow.org/) (through [Keras](https://keras.io)) to develop, and train the ML model as well as for the ML inference
 * [SmartSim](https://github.com/CrayLabs/SmartSim), using SmartRedis in-memory database, handles the communication between the simulation code and the ML model
 
-In order to set up the workflow, you first need to install these tools in the version suitable for SmartSim. For this step, it is best to follow the developers' instructions; however, we provide an example step-by-step and expected outcomes at each stage for installing these on [Cirrus](https://www.cirrus.ac.uk).
+In order to set up the workflow, you first need to install these tools in the [versions suitable for SmartSim](https://www.craylabs.org/docs/installation_instructions/basic.html#supported-versions). 
+For this step, it is best to follow the tool's installing instructions; however, we provide an example step-by-step and expected outcomes at each stage for installing these on [Cirrus](https://www.cirrus.ac.uk).
 
 [Example installation on Cirrus](./example-installation.md)
 
@@ -27,23 +28,25 @@ conda activate myvenv
 
 Export the (trained) ML model in a format suitable for SmartSim. 
 
-In the small test example we are using a grid 128x256 with 4 guard cells in the x dimension, hence our model expects a grid of size (132, 256). Here we use a model that returns all zeros to ..., so we create `zero_model-132-256.pb` in the current directory:
+In the small test example, we are using a grid 128x256 with 4 guard cells in the x-dimension, hence our model expects a grid of size (132, 256). To demonstrate the workflow, we use a model that returns a tensor of 0s, this allows the user to easily verify that the added ML-loop does not distort the simulation in any unexpected way. 
+
+Create `zero_model-132-256.pb` in the current directory:
 ```
 python write_zero_model.py 132 256 -f zero-model-132-256.pb
 ```
 
-The `write_zero_model.py` defines a simple CNN which returns all zeros... 
-Note that the script requires also `padding.py`, which is our in-house implementation of periodic padding, which is not currently implemented in TensorFlow.
+The `write_zero_model.py` uses the target CNN architecture with a modified final layer to force all-0s output while maintaining properties of the model, such as computational effort needed to add the ML inference to the workflow.
+Note that the script requires also `padding.py`; this is our in-house implementation of periodic padding which is currently not implemented in TensorFlow.
 
 You can now test the zero model:
 ```
 python zero_model_test.py
 ```
-This launches a database, uploads the zero model and inputs a random tensor, returning a tensor of the same size, containing only zeroes. The output gets printed on screen.
+This script launches a database and uploads the zero model. It generates a random tensor and uses it as input for the model inference, which should return a tensor of the same dimensions filled with zero. The output gets printed on screen so that one can easily verify the content of the returned tensor.
 
 ### Compile Hasegawa Wakatani with SmartRedis
 
-Hasegawa-Wakatani comes included among BOUT++ examples and gets downloaded to the system during BOUT++ installation.
+Hasegawa-Wakatani system of equations is included among BOUT++ examples and gets downloaded to the system during BOUT++ installation.
 
 With `myvenv` still active, load the following modules:
 ```
@@ -54,8 +57,8 @@ module load cmake
 
 Make a working copy of the hasegawa-wakatani example outside the BOUT-dev root directory
 ```
-cp -r BOUT-dev/examples/hasegawa-wakatani my-bout-smartsim
-cd my-bout-smartsim
+cp -r BOUT-dev/examples/hasegawa-wakatani my-bout-smartsim-hw
+cd my-bout-smartsim-hw
 ```
 
 Set the location of the BOUT++ build path for CMake
@@ -63,7 +66,7 @@ Set the location of the BOUT++ build path for CMake
 cmake . -B build -Dbout++_DIR=../BOUT-dev/build -DCMAKE_CXX_FLAGS=-std=c++17 -DCMAKE_BUILD_TYPE=Release
 ```
 
-Compile your version of Hasegawa-Wakatani example. `my-bout-smartsim` should contain (among others) `CMakeLists.txt` and `hw.cxx` which you need to modify --- The `CMakeLists.txt` needs to point to the path to the SmartRedis libraries as discussed in *link*, while the changes to `hw.cxx` implement the call onto the SmartRedis database and the CNN within, and receives and actions the correction to the simulation. You can see examples of the modified files *here*.
+Compile your version of Hasegawa-Wakatani example. `my-bout-smartsim-hw` should contain (among others) `CMakeLists.txt` and `hw.cxx` which you need to modify --- The `CMakeLists.txt` needs to point to the path to the SmartRedis libraries as discussed in [the example installation](https://github.com/EPCCed/SiMLInt/blob/docs/docs/example-installation.md#build-smartredis-libraries), while the changes to `hw.cxx` implement the call onto the SmartRedis database and the CNN within, and receives and actions the correction to the simulation. You can see examples of the modified files in [files/modified_HW](files/modified_HW).
 ```
 cmake --build build --target hasegawa-wakatani
 ```

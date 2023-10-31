@@ -72,3 +72,5 @@ cd my-bout-smartsim-hw
 
 An example script that can be used on Cirrus can be found in [files/run_SmartSim/submit-hw.sh](https://github.com/EPCCed/SiMLInt/blob/docs/files/run_SmartSim/submit-hw.sh)
 This slurm job file starts the SmartSim orchestrator (in Python) with a Redis database and RedisAI communication layer.  In this example, the Redis DB runs on the same node since the simulation only runs in one process.
+
+[back](./)

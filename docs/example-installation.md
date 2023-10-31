@@ -1,0 +1,2 @@
+# Example installation on Cirrus
+

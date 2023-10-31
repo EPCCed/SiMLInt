@@ -31,5 +31,5 @@ conda activate myvenv
 python start_db.py 6899 /work/d175/d175/shared/zero-model-256-double.pb
 
 export SSDB=127.0.0.1:6899
-cd my-bout-smartsim
+cd my-bout-smartsim-hw
 srun -n 1 --distribution=block:block --hint=nomultithread ./hasegawa-wakatani

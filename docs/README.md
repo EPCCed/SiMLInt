@@ -71,24 +71,28 @@ Compile your version of Hasegawa-Wakatani example. `my-bout-smartsim-hw` should 
 cmake --build build --target hasegawa-wakatani
 ```
 
-### Set up SmartRedis manually
+### Running the simulation using SmartRedis
 
-*Do this only if you are having a manual play.*
+You need to starts the RedisAI database and upload the ML model, this can be done by calling a python script `start_db.py` with appropriate arguments specifying the port where the database will be available and path to the ML model. 
+This must be done before the simulation starts (or both added to an orchestrator).
 
-The python script `start_db.py` starts the RedisAI database and uploads the ML model specified as the script's argument, together with the port where the database will be available. This script must be run before the simulation starts (or both added to an orchestrator).
-
-To start the database at port 6899 with the zero model created earlier, run
+To start the database eg at port 6899 with the zero model created earlier, run
 ```
 python start_db.py 6899 /path/to/zero-model-132-256.pb
 export SSDB=127.0.0.1:6899
 ```
+The environment variable SSDB points to the database entrypoint to which the simulation connects.
 
-You can now run your simulation in `my-bout-smartsim`
+The simulation can be then started using the executable available in `my-bout-smartsim-hw`
 ```
+cd my-bout-smartsim-hw
 ./hasegawa-wakatani
 ```
 
-[Explanation and an example submission script for Cirrus](./example-run.md)
+An example script that can be used on Cirrus can be found in [files/run_SmartSim/submit-hw.sh](files/run_SmartSim/submit-hw.sh)
+
+This slurm job file starts the SmartSim orchestrator (in Python) with a Redis database and RedisAI communication layer.  In this example, the Redis DB runs on the same node since the simulation only runs in one process.
+
 
 
 

@@ -1,4 +1,4 @@
-**SiMLInt is an [ExCALIBUR](https://excalibur.ac.uk/) project demonstrating how to integrate Machine Learning (ML) to physics simulations. It combines commonly used, open-source tools with in-house Python scripts to execute ML-aided computational fluid dynamics simulations.** 
+f**SiMLInt is an [ExCALIBUR](https://excalibur.ac.uk/) project demonstrating how to integrate Machine Learning (ML) to physics simulations. It combines commonly used, open-source tools with in-house Python scripts to execute ML-aided computational fluid dynamics simulations.** 
 
 
 ## Codes and Dependencies
@@ -35,7 +35,7 @@ We demonstrate the workflow on the Hasegawa-Wakatani set of equations using a du
 
 ## Model training
 
-The example workflow uses a model that returns always 0s for the correction, maintaining the simulation on the same trajectory it would follow without any ML adjustments. LC, however, requires a model that is trained to predict the difference between the fully resolved trajectory that runs over a sufficiently fine resolution of the domain and a trajectory that uses coarser domain decomposition (and coarser time steps). To train such a ML model, we need to generate data matching this scenario, as detailed below.
+The example workflow uses a model that returns always zeroes for the correction, maintaining the simulation on the same trajectory it would follow without any ML adjustments. LC, however, requires a model that is trained to predict the difference between the fully resolved trajectory that runs over a sufficiently fine resolution of the domain and a trajectory that uses coarser domain decomposition (and coarser time steps). To train such a ML model, we need to generate data matching this scenario, as detailed below.
 
 The training dataset can be generated as follows:
 1. Run a fully resolved simulation (denoted F)

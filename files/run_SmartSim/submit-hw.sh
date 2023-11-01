@@ -7,7 +7,7 @@
 #SBATCH --tasks-per-node=36
 #SBATCH --cpus-per-task=1
 
-#SBATCH --account=d175
+#SBATCH --account=x01
 #SBATCH --partition=standard
 #SBATCH --qos=standard
 
@@ -28,7 +28,7 @@ conda activate myvenv
 # Start the orchestrator and a new experiment which launches RedisAI for communication
 # Load the model from the given file
 # Remember to adjust the path to the start_db.py script!
-python start_db.py 6899 /work/d175/d175/shared/zero-model-256-double.pb
+python start_db.py 6899 /work/x01/x01/auser/zero-model-256-double.pb
 
 export SSDB=127.0.0.1:6899
 cd my-bout-smartsim-hw

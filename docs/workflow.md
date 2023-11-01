@@ -4,6 +4,8 @@ The system needs to have all the tools and packages (in suitable versions) insta
 
 The example workflow described here does not require a pre-trained ML model, we are using a placeholder model that alwyas returns 0s to showcase the framework, and the script is provided here. Obviously, any other model can be exported in the desired format and used in the workflow.
 
+[< Back](./)
+
 ## Export the ML model
 
 Activate the conda environment with SmartSim (see Cirrus example to make sure it has all relevant packages)
@@ -77,4 +79,4 @@ cd my-bout-smartsim-hw
 An example script that can be used on Cirrus can be found in [files/run_SmartSim/submit-hw.sh](https://github.com/EPCCed/SiMLInt/blob/docs/files/run_SmartSim/submit-hw.sh)
 This slurm job file starts the SmartSim orchestrator (in Python) with a Redis database and RedisAI communication layer.  In this example, the Redis DB runs on the same node since the simulation only runs in one process.
 
-[back](./)
+[< Back](./)

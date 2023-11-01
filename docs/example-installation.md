@@ -18,7 +18,8 @@ git clone https://github.com/boutproject/BOUT-dev.git
 ```
 
 > We are using v5.0.0; you can download this specific version using `wget`:
-> `wget https://github.com/boutproject/BOUT-dev/archive/refs/tags/v5.0.0.tar.gz`
+> 
+> ```wget https://github.com/boutproject/BOUT-dev/archive/refs/tags/v5.0.0.tar.gz```
 
 Load required modules:
 ```

@@ -2,7 +2,7 @@ This page shows
 1. how to [install BOUT++](./example-installation.md#1-bout) on Cirrus, and
 2. how to [install and set-up SmartSim](./example-installation.md#2-smartsim-with-bout) so that it can communicate with BOUT++.
 
-[back](./)
+[[< Back]](./)
 
 # 1. BOUT++
 

@@ -2,7 +2,7 @@ This page shows
 1. how to [install BOUT++](./example-installation.md#1-bout) on Cirrus, and
 2. how to [install and set-up SmartSim](./example-installation.md#2-smartsim-with-bout) so that it can communicate with BOUT++.
 
-[[< Back]](./)
+[< Back](./)
 
 # 1. BOUT++
 
@@ -67,7 +67,7 @@ MPICXX_CXX=icpc MPICXX=mpicxx cmake .  --build build -DBOUT_BUILD_EXAMPLES=on
 cmake --build build --target hasegawa-wakatani
 ```
 
-[back](./)
+[< Back](./)
 
 
 # 2. SmartSim with BOUT++
@@ -106,4 +106,4 @@ make lib
 The install path is then available in `smartredis/install`. Modify the `CMakeLists.txt` file to point to this path on your system in place of `/work/x01/x01/auser/smartsim/smartredis/install/include` on line 12.
 
 
-[back](./)
+[< Back](./)

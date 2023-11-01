@@ -26,7 +26,7 @@ The ML model is often based on a convolutional neural network (CNN), and is trai
 
 The diagram below visualises the workflow. The numerical simulation, run in BOUT++, is represented by the black squares and grids, while the Learned Correction loop is realised in SmartSim by calling a TensorFlow model, which returns the correction (orange grid).
  
-![SiMLInt workflow](./assets/SiMLInt_workflow.pdf)
+![SiMLInt workflow](./assets/SiMLInt_workflow.png)
 ![SiMLInt workflow for Chrome](https://github.com/EPCCed/SiMLInt/blob/main/docs/assets/SiMLInt_workflow.pdf)
 
 

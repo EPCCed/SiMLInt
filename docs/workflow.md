@@ -2,7 +2,7 @@
 
 The system needs to have all the tools and packages (in suitable versions) installed. See the main page and the example of installation for help. 
 
-The example workflow described here does not require a pre-trained ML model, we are using a placeholder model that alwyas returns 0s to showcase the framework, and the script is provided here. Obviously, any other model can be exported in the desired format and used in the workflow.
+The example workflow described here does not require a pre-trained ML model, we are using a placeholder model that alwyas returns zeroes to showcase the framework, and the script is provided here. Obviously, any other model can be exported in the desired format and used in the workflow.
 
 [< Back](./)
 
@@ -15,14 +15,14 @@ conda activate myvenv
 
 Export the (trained) ML model to a format suitable for SmartSim. 
 
-In the small test example, we are using a grid 128x256 with 4 guard cells in the x-dimension, hence our model expects a grid of size (132, 256). To demonstrate the workflow, we use a model that returns a tensor of 0s, this allows the user to easily verify that the added ML-loop does not distort the simulation in any unexpected way. 
+In the small test example, we are using a grid 128x256 with 4 guard cells in the x-dimension, hence our model expects a grid of size (132, 256). To demonstrate the workflow, we use a model that returns a tensor of zeroes, this allows the user to easily verify that the added ML-loop does not distort the simulation in any unexpected way. 
 
 Create `zero_model-132-256.pb` in the current directory:
 ```
 python write_zero_model.py 132 256 -f zero-model-132-256.pb
 ```
 
-The `write_zero_model.py` uses the target CNN architecture with a modified final layer to force all-0s output while maintaining properties of the model, such as computational effort needed to add the ML inference to the workflow.
+The `write_zero_model.py` uses the target CNN architecture with a modified final layer to force all-zeroes output while maintaining properties of the model, such as computational effort needed to add the ML inference to the workflow.
 Note that the script requires also `padding.py`; this is our in-house implementation of periodic padding which is currently not implemented in TensorFlow.
 
 You can now test the zero model:

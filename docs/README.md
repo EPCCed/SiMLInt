@@ -12,7 +12,7 @@ Our example workflow uses the following tools:
 To reproduce our work, the system needs to have installed these tools in the [versions suitable for SmartSim](https://www.craylabs.org/docs/installation_instructions/basic.html#supported-versions). 
 For this step, it is best to follow the tool's installing instructions; however, we provide an example step-by-step and expected outcomes at each stage for installing these on [Cirrus](https://www.cirrus.ac.uk).
 
-[Example installation on Cirrus](./example-installation.md)
+[> Example installation on Cirrus](./example-installation.md)
 
 ## Workflow
 
@@ -30,7 +30,7 @@ The diagram below visualises the workflow. The numerical simulation, run in BOUT
 
 We demonstrate the workflow on the Hasegawa-Wakatani set of equations using a dummy ML-model which does not affect the simulation. This allows the users to test that the set-up works and returns the expected results. 
 
-[Detailed instructions](./workflow.md)
+[> Detailed instructions](./workflow.md)
 
 ## Model training
 
@@ -46,4 +46,4 @@ The training dataset can be generated as follows:
 
 The dataset we have created for the Hasegawa-Wakatani example, based on 32,000 fully resolved points and, in the coarsened state prepared for the ML training, taking XXX GB, is available on request.
 
-[Implementation details](./ML_training.md)
+[> Implementation details](./ML_training.md)

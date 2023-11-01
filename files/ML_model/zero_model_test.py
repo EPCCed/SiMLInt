@@ -10,7 +10,7 @@ exp.start(db)
 
 print(db.get_address())
 
-model_path = '/mnt/lustre/indy2lfs/work/d175/d175/akexcml/smartsim/zero_model.pb'
+model_path = '/mnt/lustre/indy2lfs/work/x01/x01/auser/smartsim/zero_model.pb'
 inputs = ['x']
 outputs = ['Identity']
 

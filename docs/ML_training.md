@@ -5,4 +5,4 @@ Both the data generation as well as the model construction and training is very 
 
 *Work in progress.*
 
-[back](./)
+[< Back](./)

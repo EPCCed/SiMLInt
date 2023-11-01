@@ -27,7 +27,8 @@ The ML model is often based on a convolutional neural network (CNN), and is trai
 The diagram below visualises the workflow. The numerical simulation, run in BOUT++, is represented by the black squares and grids, while the Learned Correction loop is realised in SmartSim by calling a TensorFlow model, which returns the correction (orange grid).
  
 ![SiMLInt workflow](./assets/SiMLInt_workflow.pdf)
-![SiMLInt workflow for Chrome](https://github.com/EPCCed/SiMLInt/blob/docs/docs/assets/SiMLInt_workflow.pdf)
+![SiMLInt workflow for Chrome](https://github.com/EPCCed/SiMLInt/blob/main/docs/assets/SiMLInt_workflow.pdf)
+
 
 We demonstrate the workflow on the Hasegawa-Wakatani set of equations using a dummy ML-model which does not affect the simulation. This allows the users to test that the set-up works and returns the expected results. 
 

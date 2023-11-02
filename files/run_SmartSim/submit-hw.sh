@@ -7,7 +7,7 @@
 #SBATCH --tasks-per-node=36
 #SBATCH --cpus-per-task=1
 
-#SBATCH --account=d175
+#SBATCH --account=[budget code]
 #SBATCH --partition=standard
 #SBATCH --qos=standard
 

@@ -45,6 +45,6 @@ The training dataset can be generated as follows:
 
 ![Data Generation](./assets/data_generation_schema.png)
 
-The dataset we have created for the Hasegawa-Wakatani example, based on 32,000 fully resolved points and, in the coarsened state prepared for the ML training, taking XXX GB, is available on request.
+The dataset we have created for the Hasegawa-Wakatani example, based on 32,000 fully resolved points and, in the coarsened state prepared for the ML training, a size of roughly 32 GB, is available on request.
 
 [> Implementation details](./ML_training.md)

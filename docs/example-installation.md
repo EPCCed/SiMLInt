@@ -38,6 +38,7 @@ python -m venv --system-site-packages bout
 extend-venv-activate bout
 source bout/bin/activate
 python -m pip install cython
+module unload -f openmpi
 ```
 
 Following the first run of the above, simply `source bout/bin/activate` is enough.
@@ -46,11 +47,14 @@ Following the first run of the above, simply `source bout/bin/activate` is enoug
 > If `export HOME=$WORK` is not used, full paths must be given to `venv`, for example, `python -m venv --system-site-packages $WORK/bout`.
 > This isn't a big deal at this stage, but is more important when running SiMLInt Jupyter Notebooks.
 
+> **Note:** `module unload -f openmpi` removes the openmpi compilers from `$PATH`, which breaks `mpi4py`, but allows `BOUT++` to be compiled.
+> In our case we will not be using `mpi4py`.
+
 Build:
 ```
 cd $WORK/BOUT-dev
 
-MPICXX_CXX=icpc MPICXX=mpicxx cmake . -B build -DBOUT_DOWNLOAD_NETCDF_CXX4=ON -DBOUT_USE_LAPACK=off -DCMAKE_CXX_FLAGS=-std=c++17 -DCMAKE_BUILD_TYPE=Release
+MPICXX_CXX=icpc MPICC_CC=icc MPICXX=icpc cmake . -B build -DBOUT_DOWNLOAD_NETCDF_CXX4=ON -DBOUT_USE_LAPACK=off -DCMAKE_CXX_FLAGS=-std=c++17 -DCMAKE_BUILD_TYPE=Release
 
 export PYTHONPATH=$WORK/BOUT-dev/build/tools/pylib:$WORK/BOUT-dev/tools/pylib:$PYTHONPATH
 # This may not be not required
@@ -63,7 +67,7 @@ This will build a *pure* BOUT++ version of the Hasegawa-Wakatani example. A buil
 
 Still in `$WORK/BOUT-dev`:
 ```
-MPICXX_CXX=icpc MPICXX=mpicxx cmake .  --build build -DBOUT_BUILD_EXAMPLES=on
+MPICXX_CXX=icpc MPICC_CC=icc MPICXX=icpc cmake .  --build build -DBOUT_BUILD_EXAMPLES=on
 cmake --build build --target hasegawa-wakatani
 ```
 

@@ -1,22 +1,23 @@
 cmake_minimum_required(VERSION 3.13)
 
-project(monitor-newapi LANGUAGES CXX)
+project(hasegawa-wakatani LANGUAGES CXX)
 
-set(CMAKE_CXX_STANDARD 17)
+set(SMARTREDIS_INSTALL_PATH /path/to/SmartRedis/install)
+find_library(SMARTREDIS_LIBRARY smartredis
+             PATHS ${SMARTREDIS_INSTALL_PATH}/lib
+             NO_DEFAULT_PATH REQUIRED
+)
 
 if (NOT TARGET bout++::bout++)
   find_package(bout++ REQUIRED)
 endif()
 
 include_directories(SYSTEM
-    /work/x01/x01/auser/smartsim/smartredis/install/include
+    ${SMARTREDIS_INSTALL_PATH}/include
 )
-add_executable(monitor-newapi monitor.cxx)
-add_executable(monitor-smartsim monitor-smartsim.cxx)
-target_link_libraries(monitor-newapi
-    bout++::bout++ 
-)
-target_link_libraries(monitor-smartsim
-    bout++::bout++ 
-    ${sr_lib}
+
+add_executable(hasegawa-wakatani hw.cxx)
+target_link_libraries(hasegawa-wakatani
+    bout++::bout++
+    ${SMARTREDIS_LIBRARY}
 )

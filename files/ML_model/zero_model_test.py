@@ -5,13 +5,13 @@ import numpy as np
 
 exp = Experiment("Inference-Test", launcher="local")
 
-db = exp.create_database(port=6780, interface="lo")
+db = exp.create_database(port=6899, interface="lo")
 exp.start(db)
 
 print(db.get_address())
 
-model_path = '/mnt/lustre/indy2lfs/work/x01/x01/auser/smartsim/zero_model.pb'
-inputs = ['x']
+model_path = '/path/to/zero-model-xxx-zzz.pb'
+inputs = ['args_0']
 outputs = ['Identity']
 
 client = Client(address=db.get_address()[0], cluster=False)
@@ -21,7 +21,7 @@ client.set_model_from_file(
 )
 
 # put random random input tensor into the database
-input_data = np.random.rand(1, 132, 128, 1).astype(np.float64) 
+input_data = np.random.rand(1, 260, 256, 1).astype(np.float64) 
 client.put_tensor("input", input_data)
 
 # run the Fully Connected Network model on the tensor we just put

@@ -1,0 +1,49 @@
+#
+# Hasegawa-Wakatani training data
+#
+
+timestep = 1.0   # Output timestep
+nout = 100      # Number of output steps
+
+MYG = 0  # No need for Y communications
+
+periodicX = true  # Domain is periodic in X
+
+[mesh]
+
+nx = 132  # Note 4 guard cells in X
+ny = 1
+nz = 256  # Periodic, so no guard cells in Z
+
+dx = 0.025
+dy = 1.0
+dz = 0.025
+
+[hw]
+
+alpha = 1.0    # Adiabaticity (~ conductivity)
+kappa = 2.0    # Density gradient drive
+Dvort = 0.005   # Vorticity diffusion
+Dn = 0.005   # Density diffusion
+
+modified = true
+
+bracket = 2  # 0 = std, 1 = simple, 2 = arakawa
+
+[solver]
+type = rk4
+adaptive = false
+timestep = 0.0065
+
+[all]
+#scale = 0.0
+bndry_all = dirichlet_o2
+
+[n]
+#bndry_all = neumann_o2
+
+[vort]
+#bndry_all = dirichlet_o2
+
+#scale = 0.1  # Fluctuation amplitude
+#function = mixmode(2*pi*x) * mixmode(z) # Fluctuation function

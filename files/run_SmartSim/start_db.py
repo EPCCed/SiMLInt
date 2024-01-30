@@ -18,7 +18,7 @@ exp.start(db)
 print(f'Started Redis database at {db.get_address()[0]}')
 
 # these need to match the outputs from 'write_zero_model.py'
-inputs = ['x']
+inputs = ['args_0']
 outputs = ['Identity']
 
 client = Client(address=db.get_address()[0], cluster=False)

@@ -11,7 +11,7 @@ periodicX = true  # Domain is periodic in X
 
 [mesh]
 
-nx = 132  # Note 4 guard cells in X
+nx = 260  # Note 4 guard cells in X
 ny = 1
 nz = 256  # Periodic, so no guard cells in Z
 

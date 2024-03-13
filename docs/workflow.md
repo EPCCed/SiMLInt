@@ -13,7 +13,7 @@ Activate the conda environment with SmartSim (see Cirrus example to make sure it
 conda activate myvenv
 ```
 
-Export the (trained) ML model to a format suitable for SmartSim. 
+Export the (trained) ML model to a format suitable for SmartSim. For simplicity, you can simply generate a zero-model, that is, a model which returns a tensor of 0s regardless of the provided input. Data generation and training necessary to build an error-predicting model is decscribed [here](https://github.com/EPCCed/SiMLInt/tree/main/docs#model-training), and the resulting model can be used in place of the zero-model at all steps of the workflow below.
 
 In the small test example, we are using a grid 128x256 with 4 guard cells in the x-dimension, hence our model expects a grid of size (132, 256). To demonstrate the workflow, we use a model that returns a tensor of zeroes, this allows the user to easily verify that the added ML-loop does not distort the simulation in any unexpected way. 
 
@@ -68,6 +68,8 @@ To start the database eg at port 6899 with the zero model created earlier, run
 python start_db.py 6899 /path/to/zero-model-132-256.pb
 export SSDB=127.0.0.1:6899
 ```
+Remember to replace the zero-model with a suitable alternative model. 
+
 The environment variable SSDB points to the database entrypoint to which the simulation connects.
 
 The simulation can be then started using the executable available in `my-bout-smartsim-hw`

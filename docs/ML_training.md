@@ -14,7 +14,7 @@ The step-by-step below describes the data generation process in general. You can
 
 3. Coarsen selected simulation snapshots; these will serve as input for each simulation step, and, if selected carefully, can be used also to calculate the correction needed for the ML training.
 
-   _Note: It is important that the coarsening step generates files that can be used as an input to the simulation, rather than just coarsening the values in the field (eg by averaging or slicing the tensor. See [here](..) for our implementation._
+   _Note: It is important that the coarsening step generates files that can be used as an input to the simulation, rather than just coarsening the values in the field (eg by averaging or slicing the tensor). Have a look at our [implementation]() [LINK!] for inspiration._
 
 4. From each coarsened simulation snapshot (doneted C_t_i), run one-coarse-step simulation using the solver and save the output; these represent \hat{C}_t_{i+1}.
 

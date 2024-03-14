@@ -23,10 +23,10 @@ git clone https://github.com/boutproject/BOUT-dev.git
 
 Load required modules:
 ```
-module load mpt
-module load intel-compilers-19
-module load fftw/3.3.10-intel19-mpt225
-module load netcdf-parallel/4.6.2-intel19-mpt225
+module load intel-20.4/mpi
+module load intel-20.4/compilers
+module load fftw/3.3.10-intel20.4-impi20.4
+module load netcdf-parallel/4.9.2-intel20-impi20
 module load cmake
 ```
 
@@ -54,7 +54,7 @@ Build:
 ```
 cd $WORK/BOUT-dev
 
-MPICXX_CXX=icpc MPICC_CC=icc MPICXX=icpc cmake . -B build -DBOUT_DOWNLOAD_NETCDF_CXX4=ON -DBOUT_USE_LAPACK=off -DCMAKE_CXX_FLAGS=-std=c++17 -DCMAKE_BUILD_TYPE=Release
+MPICXX_CXX=icpc MPICXX=mpiicpc cmake . -B build -DBOUT_DOWNLOAD_NETCDF_CXX4=ON -DBOUT_USE_LAPACK=off -DCMAKE_CXX_FLAGS=-std=c++17 -DCMAKE_BUILD_TYPE=Release
 
 export PYTHONPATH=$WORK/BOUT-dev/build/tools/pylib:$WORK/BOUT-dev/tools/pylib:$PYTHONPATH
 # This may not be not required
@@ -67,7 +67,7 @@ This will build a *pure* BOUT++ version of the Hasegawa-Wakatani example. A buil
 
 Still in `$WORK/BOUT-dev`:
 ```
-MPICXX_CXX=icpc MPICC_CC=icc MPICXX=icpc cmake .  --build build -DBOUT_BUILD_EXAMPLES=on
+MPICXX_CXX=icpc MPICXX=mpiicpc cmake . -B build -DBOUT_BUILD_EXAMPLES=on
 cmake --build build --target hasegawa-wakatani
 ```
 
@@ -90,21 +90,26 @@ python -m pip install smartsim[ml]
 
 Build:
 ```
-module load mpt
-module load intel-compilers-19
-export CC=mpicc
-export CXX=mpicxx
 
-smart build --device cpu  
+module load intel-20.4/mpi
+module load intel-20.4/compilers
+module load fftw/3.3.10-intel20.4-impi20.4
+module load netcdf-parallel/4.9.2-intel20-impi20
+
+export CC=icc
+export CXX=icpc
+
+smart build --device cpu --no_pt
 ```
+We will only use Tensorflow so we are not building Pytorch support. Check out available options with `smart build --help`.
 
 ## Build SmartRedis libraries
 
 Clone the git repo and the required version and build:
 ```
-git clone https://github.com/CrayLabs/SmartRedis.git --branch v0.4.1 smartredis
+git clone https://github.com/CrayLabs/SmartRedis.git --branch v0.5.2 smartredis
 cd smartredis
-make lib
+make lib CC=icc CXX=icpc
 ```
 
 The install path is then available in `smartredis/install`. Modify the `CMakeLists.txt` file to point to this path on your system in place of `/work/x01/x01/auser/smartsim/smartredis/install/include` on line 12.

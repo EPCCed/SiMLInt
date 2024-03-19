@@ -30,25 +30,21 @@ module load netcdf-parallel/4.9.2-intel20-impi20
 module load cmake
 ```
 
-Create a Python `venv` extending the central `python/3.9.13` module, since the BOUT++ build requires Python with additional packages (Cython, zoidberg, boututils and others) which are not provided by `python/3.9.13`:
+Create a Python virtual environment - we have found the easiest way to do this is with `miniconda`, although care should be taken to use `pip` to install some features rather than `conda` as the later creates libraries that supercede those loaded by `module load`, and which are incompatible with some components of the workflow.
 ```
-export HOME=$WORK # optional, see the note below 
-module load python/3.9.13
-python -m venv --system-site-packages bout
-extend-venv-activate bout
-source bout/bin/activate
-python -m pip install cython
-module unload -f openmpi
+export HOME=$WORK # optional, see the note below
+mkdir -p ~/miniconda3
+wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda3/miniconda.sh
+bash ~/miniconda3/miniconda.sh -b -u -p ~/miniconda3
+~/miniconda3/bin/conda init bash
+
+#re-login may be required here
+conda create -y --name boutsmartsim python=3.10
+conda activate boutsmartsim
+python -m pip install cython numpy zoidberg
 ```
 
-Following the first run of the above, simply `source bout/bin/activate` is enough.
-
-> **Note:** The Python `venv` module expects the venv parent directory to be `$HOME`, i.e. venv folders are in `$HOME/<venv name>`.
-> If `export HOME=$WORK` is not used, full paths must be given to `venv`, for example, `python -m venv --system-site-packages $WORK/bout`.
-> This isn't a big deal at this stage, but is more important when running SiMLInt Jupyter Notebooks.
-
-> **Note:** `module unload -f openmpi` removes the openmpi compilers from `$PATH`, which breaks `mpi4py`, but allows `BOUT++` to be compiled.
-> In our case we will not be using `mpi4py`.
+Following the first run of the above, simply `conda activate boutsmartsim` is enough.
 
 Build:
 ```
@@ -81,7 +77,7 @@ Follow [Cirrus docs](https://docs.cirrus.ac.uk/user-guide/python/#installing-you
 
 Add the following packages to install SmartSim ML wrapper:
 ```
-conda activate myvenv
+conda activate boutsmartsim
 conda install git-lfs
 git lfs install
 conda install cmake

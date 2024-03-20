@@ -9,3 +9,6 @@ The simulation software, BOUT++, comes with a set of examples, including the Has
 
 ## run_SmartSim
 Scripts to start the in-memory database and to submit a job running the workflow.
+
+## training
+Files/instructions prepared for specific events

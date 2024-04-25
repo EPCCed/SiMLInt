@@ -14,7 +14,7 @@ For this step, it is best to follow the tool's installation instructions; howeve
 
 [> Example installation on Cirrus](./example-installation.md)
 
-A [Docker container](https://github.com/orgs/EPCCed/packages/container/package/simlint) has also been made available, with these components installed on an Ubuntu image using compiled with GCC, OpenMPI and miniconda3.
+A [Docker container](https://github.com/orgs/EPCCed/packages/container/package/simlint) has also been made available, with these components installed on an Ubuntu image using GCC, OpenMPI and Miniconda3.
 
 ## Workflow
 

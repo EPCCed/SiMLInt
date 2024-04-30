@@ -1,12 +1,12 @@
 #!/bin/bash
 
-#SBATCH --job-name=boutsmartsim
+#SBATCH --job-name=resizetraj
 #SBATCH --time=0:20:00
 #SBATCH --nodes=1
 #SBATCH --tasks-per-node=1
 #SBATCH --cpus-per-task=1
 
-#SBATCH --account=d175
+#SBATCH --account=x01
 #SBATCH --partition=standard
 #SBATCH --qos=standard
 

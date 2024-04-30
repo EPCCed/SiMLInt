@@ -78,7 +78,6 @@ cmake --build build --target hasegawa-wakatani
 # 2. SmartSim with BOUT++
 
 ## Python/conda environment
-Follow [Cirrus docs](https://docs.cirrus.ac.uk/user-guide/python/#installing-your-own-python-packages-with-conda) to set up a python environment to which further packages can be added. We refer to this environment `myvenv`.
 
 Add the following packages to install SmartSim ML wrapper:
 ```

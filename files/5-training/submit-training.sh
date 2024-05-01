@@ -17,7 +17,7 @@ module load nvidia/nvhpc
 
 conda activate boutsmartsim
 
-cd /path/to/SiMLInt/files/training
+cd /scratch/space1/x01/data/my-scratch-data/training/training_nc
 
 # choose appropriate parameters here
 python training.py --epochs 100 --batch-size 32 --learning-rate 0.0001

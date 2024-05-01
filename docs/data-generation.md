@@ -42,7 +42,7 @@ Following the structure given in the [general data generation](ML_training.md) c
 
     Fine-grained data must be coarsened to match the desired coarse-grained resolution. This can be done via interpolation for a general solution. Files in [files/2-coarsening](../files/2-coarsening) perform this task. Submit `submit-resize.sh` via `sbatch submit-resize.sh`.
 
-    _Note: this operates on one trajectory at a time and will therefore need to be repeated for each trajectory run in step 2.
+    Note: this operates on one trajectory at a time and will therefore need to be repeated for each trajectory run in step 2.
 
 4. Single-timestep coarse simulations.
 
@@ -52,7 +52,7 @@ Following the structure given in the [general data generation](ML_training.md) c
 
     We now have all of the data required to train the ML models, but not in the format we require. Files in [files/4-training-data](../files/4-training-data) perform this task. Edit [files/4-training-data/](../files/4-training-data/sub_gen_training_nc.sh) and [files/4-training-data/gen_training_nc.py](../files/4-training-data/gen_training_nc.py) so that the paths work with your setup.
     
-    _Note: paths are hardcoded in [files/4-training-data/gen_training_nc.py](../files/4-training-data/gen_training_nc.py), not read in from the command line.
+    Note: paths are hardcoded in [files/4-training-data/gen_training_nc.py](../files/4-training-data/gen_training_nc.py), not read in from the command line.
 
 Subsequent steps: calculating the error and model training are covered in [ML model training implementation](training_implementation.md).
 

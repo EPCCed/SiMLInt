@@ -28,8 +28,8 @@ cd /path/to/run/
 
 # Start the orchestrator and a new experiment which launches RedisAI for communication
 # Load the vorticity and density models from their files
-model_vort=/scratch/space1/d175/amy/full_stack/data-model/cnn/model-hw-20240427-164026-vort.pb
-model_n=/scratch/space1/d175/amy/full_stack/data-model/cnn/model-hw-20240427-210530-dens.pb
+model_vort=/path/to/model-hw-20240427-164026-vort.pb
+model_n=/path/to/model-hw-20240427-210530-dens.pb
 python start_db.py 6899 $model_vort $model_n
 echo "Started Redis"
 

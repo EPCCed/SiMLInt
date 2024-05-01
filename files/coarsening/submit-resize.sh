@@ -13,7 +13,7 @@
 # activate conda environment for boutdata and xbout packages
 conda activate boutsmartsim
 
-cd /path/to/SiMLInt/files/coarsening
-TRAJECTORY=17
-OUTPUT_PATH=/path/to/${TRAJECTORY}
+cd /scratch/space1/x01/data/my-scratch-data
+TRAJECTORY=1
+OUTPUT_PATH=${TRAJECTORY}/extracted
 python resize_trajectory.py ${TRAJECTORY} ${OUTPUT_PATH}

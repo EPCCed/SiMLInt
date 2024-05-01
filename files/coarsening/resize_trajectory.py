@@ -7,7 +7,7 @@ from xbout import open_boutdataset
 import restart
 
 ID_TRAJ    = sys.argv[1]
-INPUT_PATH = f'/scratch/space1/d175/data/training/ground-truth/trajectory_{ID_TRAJ}'
+INPUT_PATH = f'./{ID_TRAJ}'
 BASE_PATH  = Path(sys.argv[2])
 num_timesteps = 1001
 

@@ -38,6 +38,10 @@ Following the structure given in the [general data generation](ML_training.md) c
 
     Edit line 17 (`for TRAJ_INDEX in {1..10}`) to give the desired number of trajectories. Edit `<account>` on line 9 and `x01` in lines containing paths for your project and submit via `sbatch fine_trajectories.sh`.
 
-3. Coarsen selected simulation snapshots. ## check this
+3. Coarsen selected simulation snapshots.
 
-    Fine-grained data must be coarsened to match the desired coarse-grained resolution. This can be done via interpolation for a general solution. Files in [files/coarsening](files/coarsening) perform this task.
+    Fine-grained data must be coarsened to match the desired coarse-grained resolution. This can be done via interpolation for a general solution. Files in [files/coarsening](files/coarsening) perform this task. Submit `submit-resize.sh` via `sbatch submit-resize.sh`.
+
+4. Single-timestep coarse simulations.
+
+    

@@ -30,9 +30,9 @@ Following the structure given in the [general data generation](ML_training.md) c
     cmake --build build --target hasegawa-wakatani
     ```
     
-    Before simulating the training data, a burn-in run must be conducted at the desired resolution. For an example of this, see [fine_init.sh](../files/data-generation/fine_init.sh). Edit `<account>` on line 9 and `x01` in lines containing paths to match your `$WORK` and desired `/scratch` locations and submit via `sbatch fine_init.sh`.
+    Before simulating the training data, a burn-in run must be conducted at the desired resolution. For an example of this, see [fine_init.sh](../files/1-data-generation/fine_init.sh). Edit `<account>` on line 9 and `x01` in lines containing paths to match your `$WORK` and desired `/scratch` locations and submit via `sbatch fine_init.sh`.
 
-    Following that, we run a number of sequentially trajectories to generate fine-grained ground-truth data. See [fine_trajectories.sh](../files/data-generation/fine_trajectories.sh)
+    Following that, we run a number of sequentially trajectories to generate fine-grained ground-truth data. See [fine_trajectories.sh](../files/1-data-generation/fine_trajectories.sh)
 
     The initial simulation produces "restart files", `/scratch/space1/x01/data/my-scratch-data/initial/data/BOUT.restart.*.nc` from which a simulation can be continued. Those, as well as the input file (`/scratch/space1/x01/data/my-scratch-data/initial/data/BOUT.inp` should be placed in `/scratch/space1/x01/data/my-scratch-data/0`.
 
@@ -40,14 +40,20 @@ Following the structure given in the [general data generation](ML_training.md) c
 
 3. Coarsen selected simulation snapshots.
 
-    Fine-grained data must be coarsened to match the desired coarse-grained resolution. This can be done via interpolation for a general solution. Files in [files/coarsening](../files/coarsening) perform this task. Submit `submit-resize.sh` via `sbatch submit-resize.sh`.
+    Fine-grained data must be coarsened to match the desired coarse-grained resolution. This can be done via interpolation for a general solution. Files in [files/2-coarsening](../files/2-coarsening) perform this task. Submit `submit-resize.sh` via `sbatch submit-resize.sh`.
 
     _Note: this operates on one trajectory at a time and will therefore need to be repeated for each trajectory run in step 2.
 
 4. Single-timestep coarse simulations.
 
-    With the previous step having extracted fine-grained data for each time step (and each trajectory for which it was repeated), we now need to run a single-timestep coarse-grained simulation. To do this, see [files/coarse_simulations](../files/coarse_simulations/). Submitting [run_coarse_sims.sh](../files/coarse_simulations/run_coarse_sims.sh) will run a single step simulation for each coarsened timestep created in the previous step.
+    With the previous step having extracted fine-grained data for each time step (and each trajectory for which it was repeated), we now need to run a single-timestep coarse-grained simulation. To do this, see [files/3-coarse_simulations](../files/3-coarse_simulations/). Submitting [run_coarse_sims.sh](../files/3-coarse_simulations/run_coarse_sims.sh) will run a single step simulation for each coarsened timestep created in the previous step.
 
-Subsequent steps: calculating the error; reformatting data for ingestion into TensorFlow; and model training are covered in [ML model training implementation](training_implementation.md).
+5. Generating training data.
+
+    We now have all of the data required to train the ML models, but not in the format we require. Files in [files/4-training-data](../files/4-training-data) perform this task. Edit [files/4-training-data/](../files/4-training-data/sub_gen_training_nc.sh) and [files/4-training-data/gen_training_nc.py](../files/4-training-data/gen_training_nc.py) so that the paths work with your setup.
+    
+    _Note: paths are hardcoded in [files/4-training-data/gen_training_nc.py](../files/4-training-data/gen_training_nc.py), not read in from the command line.
+
+Subsequent steps: calculating the error and model training are covered in [ML model training implementation](training_implementation.md).
 
 

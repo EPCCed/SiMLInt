@@ -9,13 +9,13 @@ class HW : public PhysicsModel {
 private:
   Field3D n, vort; // Evolving density and vorticity
   Field3D phi;     // Electrostatic potential
-  Field3D error_correction;
 
   // Model parameters
   BoutReal alpha;     // Adiabaticity (~conductivity)
   BoutReal kappa;     // Density gradient drive
   BoutReal Dvort, Dn; // Diffusion
   bool modified;      // Modified H-W equations?
+  bool addCorrection;
 
   // Poisson brackets: b0 x Grad(f) dot Grad(g) / B = [f, g]
   // Method to use: BRACKET_ARAKAWA, BRACKET_STD or BRACKET_SIMPLE
@@ -37,14 +37,13 @@ protected:
     modified = options["modified"].withDefault(false);
 
     SOLVE_FOR(n, vort);
-    SAVE_REPEAT(phi, error_correction);
+    SAVE_REPEAT(phi);
 
     // Split into convective and diffusive parts
     setSplitOperator();
 
     phiSolver = Laplacian::create();
     phi = 0.; // Starting phi
-    error_correction  = 0.;
 
     // Use default flags
 
@@ -79,11 +78,80 @@ protected:
     bool cluster_mode = false; // Set to false if not using a clustered database
     client = new SmartRedis::Client(cluster_mode, __FILE__);
 
+    // no correction in the initialisation phase
+    addCorrection = false;
+
+    return 0;
+  }
+
+  int outputMonitor(BoutReal simtime, int iter, int nout) {
+    output << "iteration  =     " << iter << std::endl;
+    if (iter >= 0) {
+      output << "setting correction to true" << std::endl;
+      addCorrection = true;
+    }
     return 0;
   }
 
   int convective(BoutReal UNUSED(time)) {
     // Non-stiff, convective part of the problem
+
+    if (addCorrection) {
+
+      size_t nx = mesh->xend - mesh->xstart + 1;
+      size_t LocalNz = mesh->LocalNz;
+      size_t n_values = 1 * nx * LocalNz * 1;
+      std::vector<size_t> dims = {1, nx, LocalNz, 1};
+      std::vector<float> input_vort(n_values, 0);
+      std::vector<float> input_n(n_values, 0);
+
+      for (int i = mesh->xstart, c=0; i <= mesh->xend; ++i) {
+        for (int j = mesh->ystart; j <= mesh->yend; ++j) {
+          for (int k = 0; k < LocalNz; ++k) {
+            input_vort[c] = (float) vort(i,j,k);
+            input_n[c] = (float) n(i,j,k);
+            c++;
+          }
+        }
+      }
+
+      std::string inKeyVort = "input_vort";
+      std::string outKeyVort = "output_vort";
+      std::string inKeyN = "input_n";
+      std::string outKeyN = "output_n";
+
+      // put input tensor
+      client->put_tensor(inKeyVort, input_vort.data(), dims,
+                         SRTensorTypeFloat, SRMemLayoutContiguous);
+      client->put_tensor(inKeyN, input_n.data(), dims,
+                         SRTensorTypeFloat, SRMemLayoutContiguous);
+
+      // run model
+      client->run_model("hw_model_vort", {inKeyVort}, {outKeyVort});
+      client->run_model("hw_model_n", {inKeyN}, {outKeyN});
+
+      // unpack output tensor
+      std::vector<double> correctionVort(n_values, 0);
+      std::vector<double> correctionN(n_values, 0);
+      client->unpack_tensor(outKeyVort, correctionVort.data(), {n_values},
+                            SRTensorTypeFloat, SRMemLayoutContiguous);
+      client->unpack_tensor(outKeyN, correctionN.data(), {n_values},
+                            SRTensorTypeFloat, SRMemLayoutContiguous);
+
+
+      for (int i = mesh->xstart, c=0; i <= mesh->xend; ++i) {
+        for (int j = mesh->ystart; j <= mesh->yend; ++j) {
+          for (int k = 0; k < LocalNz; ++k) {
+            vort(i,j,k) = vort(i,j,k) + (double) correctionVort[c];
+            n(i,j,k) = n(i,j,k) + (double) correctionN[c];
+            c++;
+          }
+        }
+      }
+
+      addCorrection = false;
+      output << "setting correction to false" << std::endl;
+    }
 
     // Solve for potential
     phi = phiSolver->solve(vort, phi);
@@ -103,36 +171,7 @@ protected:
     ddt(n) =
         -bracket(phi, n, bm) + alpha * (nonzonal_phi - nonzonal_n) - kappa * DDZ(phi);
 
-    Field3D vort_ddt = -bracket(phi, vort, bm) + alpha * (nonzonal_phi - nonzonal_n);
-
-    int nx = vort_ddt.getNx();
-    int ny = vort_ddt.getNy();
-    int nz = vort_ddt.getNz();
-    std::vector<size_t> dims = {1, nx, nz, 1};
-    size_t n_values = nx * ny * nz;
-//    output << "putting tensor ";
-    std::string in_key = "input";
-    std::string out_key = "x";
-    client->put_tensor(
-      in_key,
-      &vort_ddt(0,0,0),
-      dims,
-      SRTensorTypeDouble, SRMemLayoutContiguous);
-//    output << ".... done" << std::endl;
-
-//    output << "running inference ";
-    client->run_model("hw_zero_model", {in_key}, {out_key});
-//    output << ".... done" << std::endl;
-
-//    output << "unpacking result ";
-    client->unpack_tensor(
-      out_key,
-      &error_correction(0,0,0),
-      {n_values},
-      SRTensorTypeDouble, SRMemLayoutContiguous);
-//    output << ".... done" << std::endl;
-
-    ddt(vort) = vort_ddt - error_correction;
+    ddt(vort) = -bracket(phi, vort, bm) + alpha * (nonzonal_phi - nonzonal_n);
 
     return 0;
   }
@@ -144,7 +183,6 @@ protected:
     ddt(vort) = +Dvort * Delp2(vort);
     return 0;
   }
-
 };
 
 // Define a main() function

@@ -60,25 +60,20 @@ cmake --build build --target hasegawa-wakatani
 
 ## Running the simulation using SmartRedis
 
-You need to starts the RedisAI database and upload the ML model, this can be done by calling a python script `start_db.py` with appropriate arguments specifying the port where the database will be available and path to the ML model. 
+You need to start the RedisAI database and upload the ML models, this can be done by calling a python script `start_db.py` with appropriate arguments specifying the port where the database will be available and path to the ML models (first the 'vort' model, then the 'n' model). 
 This must be done before the simulation starts (or both added to an orchestrator).
 
 To start the database eg at port 6899 with the zero model created earlier, run
 ```
-python start_db.py 6899 /path/to/zero-model-132-256.pb
+python start_db.py 6899 /path/to/model-hw-20240427-164026-vort.pb /path/to/model-hw-20240427-210530-dens.pb
 export SSDB=127.0.0.1:6899
 ```
-Remember to replace the zero-model with a suitable alternative model. 
+Example models can be found in [files/models](https://github.com/EPCCed/SiMLInt/blob/docs/files/models). 
 
 The environment variable SSDB points to the database entrypoint to which the simulation connects.
 
-The simulation can be then started using the executable available in `my-bout-smartsim-hw`
-```
-cd my-bout-smartsim-hw
-./hasegawa-wakatani
-```
+The simulation can be then started using the executable available in [files/HW-error-correction](https://github.com/EPCCed/SiMLInt/blob/docs/files/HW-error-correction).
 
-An example script that can be used on Cirrus can be found in [files/run_SmartSim/submit-hw.sh](https://github.com/EPCCed/SiMLInt/blob/docs/files/run_SmartSim/submit-hw.sh)
-This slurm job file starts the SmartSim orchestrator (in Python) with a Redis database and RedisAI communication layer.  In this example, the Redis DB runs on the same node since the simulation only runs in one process.
+Both of these commands are used by the SLURM submission script [files/6-simulation/submit-hw.sh](https://github.com/EPCCed/SiMLInt/blob/docs/files/6-simultaion/submit-hw.sh), which can be modified with you account and used on Cirrus.
 
 [< Back](./)

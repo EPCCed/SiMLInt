@@ -32,8 +32,7 @@ else:
 val_frac = 0.2
 
 samples_per_file = 1000 # to estimate train/val split
-#data_location = '/scratch/space1/d175/data/training/derived/notebooks/'
-data_location = '/work/d175/d175/akexcml/smartsim/python/data/'
+data_location = '/scratch/space1/d175/amy/resize_again/training_data/'
 file_nums = list(range(1,33)) # [ x+1 for x in range(32) ]
 
 # training protocol

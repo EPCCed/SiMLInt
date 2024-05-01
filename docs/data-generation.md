@@ -6,7 +6,7 @@ Following the structure given in the [general data generation](ML_training.md) c
  - 1024x1024 for fine-grained simulations; and
  - 256x256 for coarse-grained simulations.
 
-For BOUT++ our implementation, we performed 2-d simulations, with guard cells in the x-dimension (1028 or 260 x values), 1 y value, and a periodic z-dimension (1024 or 256 values). Therefore the shapes of the variables used by BOUT++ are (1028x1x1024) for the fine-grained simulations and (260x1x256) for the coarse-grained simultions.
+    For BOUT++ our implementation, we performed 2-d simulations, with guard cells in the x-dimension (1028 or 260 x values), 1 y value, and a periodic z-dimension (1024 or 256 values). Therefore the shapes of the variables used by BOUT++ are (1028x1x1024) for the fine-grained simulations and (260x1x256) for the coarse-grained simultions.
 
 2. Generate a "fully resolved" simulation.
 

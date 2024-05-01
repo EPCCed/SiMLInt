@@ -48,6 +48,6 @@ Following the structure given in the [general data generation](ML_training.md) c
 
     With the previous step having extracted fine-grained data for each time step (and each trajectory for which it was repeated), we now need to run a single-timestep coarse-grained simulation. To do this, see [files/coarse_simulations](../files/coarse_simulations/). Submitting [run_coarse_sims.sh](../files/coarse_simulations/run_coarse_sims.sh) will run a single step simulation for each coarsened timestep created in the previous step.
 
-5. Calculate the correction.
+Subsequent steps: calculating the error; reformatting data for ingestion into TensorFlow; and model training are covered in [ML model training implementation](training_implementation.md).
 
-    
+

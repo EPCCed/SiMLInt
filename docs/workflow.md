@@ -5,8 +5,7 @@ The system needs to have all the tools and packages (in suitable versions) insta
 The example workflow described here does not require a pre-trained ML model, we are using a placeholder model that alwyas returns zeroes to showcase the framework, and the script is provided here. Obviously, any other model can be exported in the desired format and used in the workflow.
 
 [< Back](./)
-
-## Export the ML model
+<!-- ## Export the ML model
 
 Activate the conda environment with SmartSim (see Cirrus example to make sure it has all relevant packages)
 ```
@@ -29,7 +28,7 @@ You can now test the zero model:
 ```
 python zero_model_test.py
 ```
-This script launches a database and uploads the zero model. It generates a random tensor and uses it as input for the model inference, which should return a tensor of the same dimensions filled with zero. The output gets printed on screen so that one can easily verify the content of the returned tensor.
+This script launches a database and uploads the zero model. It generates a random tensor and uses it as input for the model inference, which should return a tensor of the same dimensions filled with zero. The output gets printed on screen so that one can easily verify the content of the returned tensor. -->
 
 ## Compile Hasegawa Wakatani with SmartRedis
 

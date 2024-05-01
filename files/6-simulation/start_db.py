@@ -7,8 +7,8 @@ import numpy as np
 
 
 db_port = int(sys.argv[1])
-#model_path = '/work/d175/shared/zero-model-256.pb'
-model_path = sys.argv[2]
+vort_model_path = sys.argv[2]
+n_model_path = sys.argv[3]
 
 exp = Experiment("Inference-Test", launcher="local")
 
@@ -17,14 +17,16 @@ exp.start(db)
 
 print(f'Started Redis database at {db.get_address()[0]}')
 
-# these need to match the outputs from 'write_zero_model.py'
+# these need to match the outputs from the model freeze call
 inputs = ['args_0']
 outputs = ['Identity']
 
 client = Client(address=db.get_address()[0], cluster=False)
 
 client.set_model_from_file(
-    "hw_zero_model", model_path, "TF", device="CPU", inputs=inputs, outputs=outputs
+    "hw_model_vort", vort_model_path, "TF", device="CPU", inputs=inputs, outputs=outputs
 )
-print('Uploaded model')
-
+client.set_model_from_file(
+    "hw_model_n", n_model_path, "TF", device="CPU", inputs=inputs, outputs=outputs
+)
+print('Uploaded models')

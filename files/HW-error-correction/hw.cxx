@@ -85,9 +85,9 @@ protected:
   }
 
   int outputMonitor(BoutReal simtime, int iter, int nout) {
-    output << "iteration  =     " << iter << std::endl;
+    // output << "iteration  =     " << iter << std::endl;
     if (iter >= 0) {
-      output << "setting correction to true" << std::endl;
+      // output << "setting correction to true" << std::endl;
       addCorrection = true;
     }
     return 0;
@@ -150,7 +150,7 @@ protected:
       }
 
       addCorrection = false;
-      output << "setting correction to false" << std::endl;
+      // output << "setting correction to false" << std::endl;
     }
 
     // Solve for potential

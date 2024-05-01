@@ -5,7 +5,7 @@ Following on from the [data generation phase](data-generation.md) of our impleme
 
 We are at the stage of having fine-grained simulation trajectories, and from those, extracted data for each timestep, coarsened that data, and run single-timestep coarse-grained simulations. We have then converted that data to NetCDF files that contain data at timestep 0 (gt_traj_{traj}.nc), the ground-truth data resulting from coarsening of the fine-grained simulation for trajectory {traj}, and at timestep 1 (sim_traj_{traj}.nc), the coarse-grained simulation output following a single time step.
 
-The files in [files/5-training](https://github.com/EPCCed/SiMLInt/tree/main/files/5-training) take this data and perform: (1) error calculation; (2) ML model training and (3) freezing the models for use in LC simulations.
+The files in [files/5-training](https://github.com/EPCCed/SiMLInt/tree/main/files/5-training) take this data and perform: (1) error calculation; (2) ML model training and (3) freezing the models for use in simulations with LC.
 
 1. Error calculation.
 
@@ -17,6 +17,6 @@ The files in [files/5-training](https://github.com/EPCCed/SiMLInt/tree/main/file
 
 3. Training.
 
-    Running [files/5-training/training.py](https://github.com/EPCCed/SiMLInt/tree/main/files/5-training/training.py) via `sbatch submit-training.sh` submits the training script to a GPU node on Cirrus. It trains two models (one to correct vorticity and one to correct density) which it then freezes to file. Examples of these can be found in [files/models](https://github.com/EPCCed/SiMLInt/tree/main/files/models). These will be loaded into the SmartRedis database for use during LC simulations.
+    Running [files/5-training/training.py](https://github.com/EPCCed/SiMLInt/tree/main/files/5-training/training.py) via `sbatch submit-training.sh` submits the training script to a GPU node on Cirrus. It trains two models (one to correct vorticity and one to correct density) which it then freezes to file. Examples of these can be found in [files/models](https://github.com/EPCCed/SiMLInt/tree/main/files/models). These will be loaded into the SmartRedis database for use during simulations.
 
-The [next step](inference.md) is to run a LC simulation using SmartSim, BOUT++ and TensorFlow, with inference from the newly trained model.
+The [next step](inference.md) is to run a simulation with LC using SmartSim, BOUT++ and TensorFlow, with inference from the newly trained model.

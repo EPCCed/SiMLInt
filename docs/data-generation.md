@@ -1,6 +1,6 @@
 # Data Generation
 
-Following the structure given in the [general data generation](ML_training.md) case, this page describes our implementation for the Hasegawa-Wakatani example.
+Following the structure given in the [general data generation](ML_training.md) case, this page describes the data generation phase of our implementation for the Hasegawa-Wakatani example.
 
 1. Fine- and coarse-grained resolutions. We chose:
  - 1024x1024 for fine-grained simulations; and

@@ -18,3 +18,5 @@ The files in [files/5-training](https://github.com/EPCCed/SiMLInt/tree/main/file
 3. Training.
 
     Running [files/5-training/training.py](https://github.com/EPCCed/SiMLInt/tree/main/files/5-training/training.py) via `sbatch submit-training.sh` submits the training script to a GPU node on Cirrus. It trains two models (one to correct vorticity and one to correct density) which it then freezes to file. Examples of these can be found in [files/models](https://github.com/EPCCed/SiMLInt/tree/main/files/models). These will be loaded into the SmartRedis database for use during LC simulations.
+
+The [next step](inference.md) is to run a LC simulation using SmartSim, BOUT++ and TensorFlow, with inference from the newly trained model.

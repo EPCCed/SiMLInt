@@ -30,8 +30,7 @@ Using the data generated as described above, and after having decided on a speci
 
 Once the training concludes, the model needs to be exported in a format suitable for SmartSim, as it will be called by the orchestrator as part of the full workflow. 
 
-- You can see an example of how to freeze a model [here](https://github.com/EPCCed/SiMLInt/blob/main/files/ML_model/write_zero_model.py) (for the zero-model discussed in the Workflow section)
-- The full training [script]() including the model export.
+- Our implementation of ML training is described [here](training_implementation.md).
 
 
 

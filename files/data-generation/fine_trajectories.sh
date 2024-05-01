@@ -26,7 +26,7 @@ do
   cp /scratch/space1/x01/data/my-scratch-data/${TRAJ_INDEX_BEFORE}/BOUT.inp .
 
   srun --nodes=1 --ntasks=32 --job-name=bout-hw --distribution=block:block \
-      /work/x01/x01/$USER/BOUT-dev/build/examples/hasegawa-wakatani/hasegawa-wakatani \
+      /work/x01/x01/$USER/my-hw/build/hasegawa-wakatani \
       solver:type=rk4 solver:adaptive=false solver:timestep=0.008 \
       nout=1000 restart=true append=false -d . >> _log.txt 2>&1
 

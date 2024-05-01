@@ -16,5 +16,5 @@ module load netcdf-parallel/4.9.2-intel20-impi20
 cd /scratch/space1/x01/data/my-scratch-data/initial/
 
 srun --nodes=1 --ntasks=32 --job-name=bout-hw --distribution=block:block \
-    /work/x01/x01/$USER/BOUT-dev/build/examples/hasegawa-wakatani/hasegawa-wakatani \
+    /work/x01/x01/$USER/my-hw/build/hasegawa-wakatani \
     nout=4800 -d . >> _log.txt 2>&1

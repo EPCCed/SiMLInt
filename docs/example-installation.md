@@ -63,11 +63,6 @@ This will build a *pure* BOUT++ version of the Hasegawa-Wakatani example. A buil
 
 Still in `$WORK/BOUT-dev`:
 ```
-# For full compatibility with the test simulations run during the SiMLInt project, the diffusive function is modified.
-# Comment out the two lines below if the HW example is to be left as it is in BOUT-dev
-sed -i 's/-Dn \* Delp4(n);/+Dn \* Delp2(n);/g' examples/hasegawa-wakatani/hw.cxx
-sed -i 's/-Dvort \* Delp4(vort);/+Dvort \* Delp2(vort);/g' examples/hasegawa-wakatani/hw.cxx
-
 MPICXX_CXX=icpc MPICXX=mpiicpc cmake . -B build -DBOUT_BUILD_EXAMPLES=on
 cmake --build build --target hasegawa-wakatani
 ```

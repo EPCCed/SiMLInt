@@ -10,19 +10,21 @@ Our example workflow uses the following tools:
 * [SmartSim](https://github.com/CrayLabs/SmartSim), using SmartRedis in-memory database, to handle the coordination and communication between the simulation code and the ML model
 
 To reproduce our work, the system needs to have installed these tools in the [versions suitable for SmartSim](https://www.craylabs.org/docs/installation_instructions/basic.html#supported-versions). 
-For this step, it is best to follow the tool's installation instructions; however, we provide an example step-by-step and expected outcomes at each stage for installing these on [Cirrus](https://www.cirrus.ac.uk). Instructions to recreate our implementation are linked below.
+For this step, it is best to follow the tool's installation instructions; however, we provide an example step-by-step and expected outcomes at each stage for installing these on [Cirrus](https://www.cirrus.ac.uk).
+
+Instructions to recreate our implementation are linked below.
 
 1. [> Cirrus Installation ](./example-installation.md)
 
-2. [> General ML Training](ML_training.md)
+2. [> General Data Generation and ML Training](./ML_training.md)
 
-3. [> Data generation](data-generation.md)
+3. [> SiMLInt Data Generation Implementation ](./data-generation.md)
 
-4. [> ML Training Implementation](./ML_training.md)
+4. [> SiMLInt ML Training Implementation](./training_implementation.md)
 
-5. [> Inference](inference.md)
+5. [> SiMLInt Simulation ](./inference.md)
 
-A [Docker container](https://github.com/orgs/EPCCed/packages/container/package/simlint), which can perform inference or produce groun-truth data, has also been made available, with the SiMLInt components installed on an Ubuntu image using GCC, OpenMPI and Miniconda3. For Docker container usage instructions, click [here](docker-image.md).
+A [Docker container](https://github.com/orgs/EPCCed/packages/container/package/simlint), which can perform run BOUT Hasegawa-Wakatani simulations, generate ground-truth data, or run SiMLInt simulations with inference, has also been made available, with the SiMLInt components installed on an Ubuntu image using GCC, OpenMPI and Miniconda3. For Docker container usage instructions, click [here](docker-image.md).
 
 ## Background
 

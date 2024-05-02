@@ -1,4 +1,4 @@
-# Inference
+# Running SiMLInt LC Simulation (Inference)
 
 Running a simulation with LC using the SiMLInt framework requires SmartSim, BOUT++ (with modified [hw.cxx](https://github.com/EPCCed/SiMLInt/tree/main/files/HW-error-correction/hw.cxx)) and TensorFlow. To install these, follow the [example installation](example-installation.md). The modifications made to `hw.cxx` differ from those made for ground-truth data generation. Now the SmartRedis Client is included to send/receive data from the SmartRedis database, request ML model runs and add the inferred error correction to BOUT++ internal variables for vorticity and density.
 

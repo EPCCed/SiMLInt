@@ -1,4 +1,4 @@
-# ML Model Training
+# SiMLInt ML Model Training Implementation
 
 Following on from the [data generation phase](data-generation.md) of our implementation for the Hasegawa-Wakatani example, this page describes how we train our ML models.
 

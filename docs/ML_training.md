@@ -1,4 +1,4 @@
-# Data generation and ML training
+# Data generation and ML training - General Background
 
 Both the data generation as well as the model construction and training is very problem specific. However, there are steps needed to create a useful model that are applicable more generally. This section interleaves the general principles with technical instructions to build a suitable ML model.
 

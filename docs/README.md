@@ -16,7 +16,7 @@ For this step, it is best to follow the tool's installation instructions; howeve
 
 A [Docker container](https://github.com/orgs/EPCCed/packages/container/package/simlint) has also been made available, with these components installed on an Ubuntu image using GCC, OpenMPI and Miniconda3.
 
-## Workflow
+## Background
 
 The SiMLInt workflow is currently based on [Learned Correction](https://www.pnas.org/doi/full/10.1073/pnas.2101784118) (LC):  
 
@@ -30,14 +30,13 @@ The diagram below visualises the workflow. The numerical simulation, run in BOUT
  
 ![SiMLInt workflow](./assets/SiMLInt_workflow.png)
 
+We demonstrate the workflow on the Hasegawa-Wakatani set of equations. Users can test the setup using previously trained models provided. An installation example, that uses Cirrus, is linked below.
 
-We demonstrate the workflow on the Hasegawa-Wakatani set of equations using a dummy ML-model which does not affect the simulation. This allows the users to test that the set-up works and returns the expected results. 
+[> Cirrus Installation](./example-installation.md)
 
-[> Detailed instructions](./workflow.md)
+## Example Implementation
 
-## Model training
-
-The example workflow uses a model that returns always zeroes for the correction, maintaining the simulation on the same trajectory it would follow without any ML adjustments. LC, however, requires a model that is trained to predict the difference between the fully resolved trajectory that runs over a sufficiently fine resolution of the domain and a trajectory that uses coarser domain decomposition (and coarser time steps). To train such a ML model, we need to generate data matching this scenario, as detailed below.
+LC, requires a model that is trained to predict the difference between the fully resolved trajectory that runs over a sufficiently fine resolution of the domain and a trajectory that uses coarser domain decomposition (and coarser time steps). To train such a ML model, we need to generate data matching this scenario, as detailed below.
 
 The training dataset can be generated as follows:
 1. Run a fully resolved simulation (denoted F)
@@ -47,6 +46,14 @@ The training dataset can be generated as follows:
 
 ![Data Generation](./assets/data_generation_schema.png)
 
-The dataset we have created for the Hasegawa-Wakatani example, based on 32,000 fully resolved points and, in the coarsened state prepared for the ML training, a size of roughly 32 GB, is available on request.
+The dataset we have created for the Hasegawa-Wakatani example, based on 32,000 fully resolved points and, in the coarsened state prepared for the ML training, a size of roughly 32 GB, is available on request. Instructions to recreate our implementation are linked below.
 
-[> Implementation details](./ML_training.md)
+1. [> Cirrus Installation ](./example-installation.md)
+
+2. [> General ML Training](ML_training.md)
+
+3. [> Data generation](data-generation.md)
+
+4. [> ML Training Implementation](./ML_training.md)
+
+5. [> Inference](inference.md)

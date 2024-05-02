@@ -7,3 +7,5 @@ Running a simulation with LC using the SiMLInt framework requires SmartSim, BOUT
 The output should differ slightly from a "pure" BOUT++ Hasegawa-Wakatani in that information about the SmartRedis database is given, and extra lines are produced during simulation to give timing information on communication with the database.
 
 To visualise the result of this, or any other BOUT++ simulations, see the Jupyter Notebook, [Visualise.ipynb](https://github.com/EPCCed/SiMLInt/tree/main/files/7-visualisation/Visualise.ipynb).
+
+[< Back](./)

@@ -109,5 +109,4 @@ make lib CC=icc CXX=icpc
 
 The install path is then available in `smartredis/install`. Modify the `CMakeLists.txt` file to point to this path on your system in place of `/work/x01/x01/auser/smartsim/smartredis/install/include` on line 12.
 
-
 [< Back](./)

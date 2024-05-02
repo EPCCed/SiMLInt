@@ -32,7 +32,4 @@ Once the training concludes, the model needs to be exported in a format suitable
 
 - Our implementation of ML training is described [here](training_implementation.md).
 
-
-
-
 [< Back](./)

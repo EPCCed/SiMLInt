@@ -56,4 +56,4 @@ Following the structure given in the [general data generation](ML_training.md) c
 
 Subsequent steps: calculating the error and model training are covered in [ML model training implementation](training_implementation.md).
 
-
+[< Back](./)

@@ -22,7 +22,7 @@ For this step, it is best to follow the tool's installation instructions; howeve
 
 5. [> Inference](inference.md)
 
-A [Docker container](https://github.com/orgs/EPCCed/packages/container/package/simlint), which can perform inference or produce groun-truth data, has also been made available, with the SiMLInt components installed on an Ubuntu image using GCC, OpenMPI and Miniconda3.
+A [Docker container](https://github.com/orgs/EPCCed/packages/container/package/simlint), which can perform inference or produce groun-truth data, has also been made available, with the SiMLInt components installed on an Ubuntu image using GCC, OpenMPI and Miniconda3. For Docker container usage instructions, click [here](docker-image.md).
 
 ## Background
 

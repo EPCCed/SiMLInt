@@ -19,20 +19,48 @@ docker pull ghcr.io/epcced/simlint:latest
 
 To run the SiMLInt Docker image follow these steps:
 
-1. Run the following command:
+1. "Pure" BOUT++ Simulation: Run the following command:
 
     ```shell
-    mkdir -p $HOME/simlint-docker/sim/data
-    docker run -v $HOME/simlint-docker/sim:/sim ghcr.io/epcced/simlint:latest mpirun -n 1 bout-hw
+    mkdir -p $HOME/simlint-containerised
+    cp -r $HOME/SiMLInt/files/containerised-runs $HOME/simlint-containerised
+    docker run -v $HOME/simlint-containerised:/sim ghcr.io/epcced/simlint:latest mpirun -n 1 bout-hw
     ```
 
-    This command will run the Docker image and mount the `/path/to/simlint-docker/sim` directory as a volume inside the container. The OpenMPI command `mpirun -n 1` instructs BOUT++ to use one processor only due to the format of the example input data. To run over multiple processors, alternative input data decomposed over *N* processors can be used with `mpirun -n N`.
+2. Ground-truth simulation:
 
-2. Further examples are given in [BOUT-only.sh] and [BOUT-smartsim.sh].
+    ```shell
+    mkdir -p $HOME/simlint-containerised
+    cp -r $HOME/SiMLInt/files/containerised-runs $HOME/simlint-containerised
+    docker run -v $HOME/simlint-containerised:/sim  ghcr.io/epcced/simlint:latest mpirun -n 1 gt-hw
+    ```
 
-That's it! You have successfully built the SiMLInt Docker image and run it with a volume. Feel free to explore and modify the code inside the container as needed.# Using SiMLInt with Singularity
+    For these first two commands, the OpenMPI command `mpirun -n 1`, which instructs BOUT++ to use one processor only due to the format of the example input data, can be instructed to use *N* processors `mpirun -n N`, however appropriately decomposed input data must be provided.
+
+3. Inference runs:
+
+    ```shell
+    mkdir -p $HOME/simlint-containerised
+    cp -r $HOME/SiMLInt/files/containerised-runs $HOME/simlint-containerised
+    docker run -v $HOME/simlint-containerised:/sim -v $HOME/SiMLInt/files/models:/models ghcr.io/epcced/simlint:latest mpirun -n 1 smartsim-hw \
+    sh -c \
+    "python /start_db.py /models/model-hw-20240427-164026-vort.pb /models/model-hw-20240427-210530-dens.pb \
+    && export SSDB=127.0.0.1:6899 \
+    && echo \"Started Redis\" \
+    && mpirun -np 1 smartsim-hw
+    ```
+
+That's it! You have successfully built the SiMLInt Docker image and run it with a volume. Feel free to explore and modify the code inside the container as needed.
+
+<!-- 
+
+
+Running with Singularity is possible, but not optimised for the particular machine. Need to see how to connect it to ghcr.io.
+
+
+# Using SiMLInt with Singularity
 SiMLInt is available as a Docker image, with BOUT++, SmartSim and TensorFlow, and with an example Hasegawa-Wakatani simulation with and without inference available.
-Typically, however, Singularity containers are preferred on HPC systems. And while it is recommended to install using the (system-adapted) SiMLInt installation instructions, it is possible to convert the Docker image to a Singularity image.
+Typically, however, Singularity containers are preferred on HPC systems. And while it is recommended to install using the (system-adapted) SiMLInt installation instructions, it is possible to convert the Docker image to a Singularity image. Currently this 
 
 To use this image with Singularity, build `simlint.sif` from the latest image:
 ```shell
@@ -70,4 +98,4 @@ This is especially useful where modules loaded on the HPC system are to be acces
 
   - Note: while the above will allow SiMLInt to be run with Singularity, it uses OpenMPI compiled within the image for portability. To achieve performant simulation runs it is recommended that an image is built using recommended libraries on the target HPC system. To do this, the Dockerfile should be adapted to a [Singularity Definition File](https://docs.sylabs.io/guides/3.0/user-guide/definition_files.html).
 
-An [example](run_simlint.sh) SLURM submission script that runs SiMLInt (BOUT only) on Cirrus is provided. Run with: `sbatch run_simlint.sh`.
+An [example](run_simlint.sh) SLURM submission script that runs SiMLInt (BOUT only) on Cirrus is provided. Run with: `sbatch run_simlint.sh`. -->

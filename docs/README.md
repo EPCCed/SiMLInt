@@ -10,11 +10,19 @@ Our example workflow uses the following tools:
 * [SmartSim](https://github.com/CrayLabs/SmartSim), using SmartRedis in-memory database, to handle the coordination and communication between the simulation code and the ML model
 
 To reproduce our work, the system needs to have installed these tools in the [versions suitable for SmartSim](https://www.craylabs.org/docs/installation_instructions/basic.html#supported-versions). 
-For this step, it is best to follow the tool's installation instructions; however, we provide an example step-by-step and expected outcomes at each stage for installing these on [Cirrus](https://www.cirrus.ac.uk).
+For this step, it is best to follow the tool's installation instructions; however, we provide an example step-by-step and expected outcomes at each stage for installing these on [Cirrus](https://www.cirrus.ac.uk). Instructions to recreate our implementation are linked below.
 
-[> Example installation on Cirrus](./example-installation.md)
+1. [> Cirrus Installation ](./example-installation.md)
 
-A [Docker container](https://github.com/orgs/EPCCed/packages/container/package/simlint) has also been made available, with these components installed on an Ubuntu image using GCC, OpenMPI and Miniconda3.
+2. [> General ML Training](ML_training.md)
+
+3. [> Data generation](data-generation.md)
+
+4. [> ML Training Implementation](./ML_training.md)
+
+5. [> Inference](inference.md)
+
+A [Docker container](https://github.com/orgs/EPCCed/packages/container/package/simlint), which can perform inference or produce groun-truth data, has also been made available, with the SiMLInt components installed on an Ubuntu image using GCC, OpenMPI and Miniconda3.
 
 ## Background
 
@@ -46,14 +54,4 @@ The training dataset can be generated as follows:
 
 ![Data Generation](./assets/data_generation_schema.png)
 
-The dataset we have created for the Hasegawa-Wakatani example, based on 32,000 fully resolved points and, in the coarsened state prepared for the ML training, a size of roughly 32 GB, is available on request. Instructions to recreate our implementation are linked below.
-
-1. [> Cirrus Installation ](./example-installation.md)
-
-2. [> General ML Training](ML_training.md)
-
-3. [> Data generation](data-generation.md)
-
-4. [> ML Training Implementation](./ML_training.md)
-
-5. [> Inference](inference.md)
+The dataset we have created for the Hasegawa-Wakatani example, based on 32,000 fully resolved points and, in the coarsened state prepared for the ML training, a size of roughly 32 GB, is available on request. 

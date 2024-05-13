@@ -7,7 +7,9 @@ This page shows:
 
 [< Back](./)
 
-## 1. BOUT++
+## Prerequisites
+
+The following settings, modules and Python environment are required for all installation steps.
 
 Go to the `/work` filesystem:
 
@@ -15,16 +17,6 @@ Go to the `/work` filesystem:
 export WORK=/work${HOME#/home}
 cd $WORK
 ```
-
-Download BOUT++ source code:
-
-```shell
-git clone https://github.com/boutproject/BOUT-dev.git
-```
-
-> We are using v5.0.0; you can download this specific version like this:
->
->`wget https://github.com/boutproject/BOUT-dev/archive/refs/tags/v5.0.0.tar.gz`
 
 Load required modules:
 
@@ -39,19 +31,23 @@ module load cmake
 Create a Python virtual environment - we have found the easiest way to do this is with `miniconda`, although care should be taken to use `pip` to install some features rather than `conda` as the later creates libraries that supercede those loaded by `module load`, and which are incompatible with some components of the workflow.
 
 ```shell
-export HOME=$WORK # optional, see the note below
+export HOME=$WORK
 mkdir -p ~/miniconda3
 wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda3/miniconda.sh
 bash ~/miniconda3/miniconda.sh -b -u -p ~/miniconda3
-~/miniconda3/bin/conda init bash
+eval "$(~/miniconda3/bin/conda shell.bash hook)"
 
-#re-login may be required here
-conda create -y --name boutsmartsim python=3.10
+conda create -y --name boutsmartsim python=3.11
 conda activate boutsmartsim
-python -m pip install cython numpy zoidberg
 ```
 
-Following the first run of the above, simply `conda activate boutsmartsim` is enough.
+## 1. BOUT++
+
+Download BOUT++ source code:
+
+```shell
+git clone https://github.com/boutproject/BOUT-dev.git
+```
 
 Build:
 
@@ -60,13 +56,10 @@ cd $WORK/BOUT-dev
 
 MPICXX_CXX=icpc MPICXX=mpiicpc cmake . -B build -DBOUT_DOWNLOAD_NETCDF_CXX4=ON -DBOUT_USE_LAPACK=off -DCMAKE_CXX_FLAGS=-std=c++17 -DCMAKE_BUILD_TYPE=Release
 
-export PYTHONPATH=$WORK/BOUT-dev/build/tools/pylib:$WORK/BOUT-dev/tools/pylib:$PYTHONPATH
-# This may not be not required
-
 cmake --build build -j 6
 ```
 
-## BOUT++ Hasegawa-Wakatani example
+### BOUT++ Hasegawa-Wakatani example
 
 This will build a *pure* BOUT++ version of the Hasegawa-Wakatani example. A build with SmartSim connection capability is described on the [workflow page](./workflow.md#compile-hasegawa-wakatani-with-smartredis).
 
@@ -79,29 +72,21 @@ cmake --build build --target hasegawa-wakatani
 
 [< Back](./)
 
-# 2. SmartSim with BOUT++
+## 2. SmartSim and SmartRedis
 
-## Python/conda environment
+### Python/conda environment
 
-Add the following packages to install SmartSim ML wrapper:
+Install SmartSim ML wrapper:
 
 ```shell
-conda activate boutsmartsim
 conda install git-lfs
 git lfs install
-conda install cmake
 python -m pip install smartsim[ml]
 ```
 
 Build:
 
 ```shell
-
-module load intel-20.4/mpi
-module load intel-20.4/compilers
-module load fftw/3.3.10-intel20.4-impi20.4
-module load netcdf-parallel/4.9.2-intel20-impi20
-
 export CC=icc
 export CXX=icpc
 
@@ -110,7 +95,7 @@ smart build --device cpu --no_pt
 
 We will only use Tensorflow so we are not building Pytorch support. Check out available options with `smart build --help`.
 
-## Build SmartRedis libraries
+### Build SmartRedis libraries
 
 Clone the git repo and the required version and build:
 

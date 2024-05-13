@@ -1,4 +1,6 @@
-**SiMLInt is an [ExCALIBUR](https://excalibur.ac.uk/) project demonstrating how to integrate Machine Learning (ML) to physics simulations. It combines commonly used, open-source tools with in-house Python scripts to execute ML-aided computational fluid dynamics simulations.** 
+# SiMLInt
+
+**SiMLInt is an [ExCALIBUR](https://excalibur.ac.uk/) project demonstrating how to integrate Machine Learning (ML) to physics simulations. It combines commonly used, open-source tools with in-house Python scripts to execute ML-aided computational fluid dynamics simulations.**
 
 ## Background
 
@@ -37,7 +39,7 @@ Our example workflow uses the following tools:
 * [TensorFlow](https://www.tensorflow.org/) (through [Keras](https://keras.io)) to develop, and train the ML model as well as for the ML inference
 * [SmartSim](https://github.com/CrayLabs/SmartSim), using SmartRedis in-memory database, to handle the coordination and communication between the simulation code and the ML model
 
-To reproduce our work, the system needs to have installed these tools in the [versions suitable for SmartSim](https://www.craylabs.org/docs/installation_instructions/basic.html#supported-versions). 
+To reproduce our work, the system needs to have installed these tools in the [versions suitable for SmartSim](https://www.craylabs.org/docs/installation_instructions/basic.html#supported-versions).
 For this step, it is best to follow the tool's installation instructions; however, we provide an example step-by-step and expected outcomes at each stage for installing these on [Cirrus](https://www.cirrus.ac.uk).
 
 Instructions to recreate our implementation are linked below.
@@ -51,4 +53,5 @@ Instructions to recreate our implementation are linked below.
 A [Docker container](https://github.com/orgs/EPCCed/packages/container/package/simlint), which can perform run BOUT Hasegawa-Wakatani simulations, generate ground-truth data, or run SiMLInt simulations with inference, has also been made available, with the SiMLInt components installed on an Ubuntu image using GCC, OpenMPI and Miniconda3. For Docker container usage instructions, click [here](docker-image.md).
 
 ## References
+
 [1] Kochkov, D., Smith, J.A., Alieva, A., Wang, Q., Brenner, M.P. and Hoyer, S., 2021. _Machine learning–accelerated computational fluid dynamics._ _Proceedings of the National Academy of Sciences_, _118_(21), p.e2101784118.

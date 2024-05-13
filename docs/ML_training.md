@@ -18,7 +18,7 @@ The step-by-step workflow below describes the data generation process in general
 
    _Note: It is important that the coarsening step generates files that can be used as an input to the simulation, rather than just coarsening the values in the field (eg by averaging or slicing the tensor). Have a look at our [implementation](data-generation.md) for inspiration._
 
-4. From each coarsened simulation snapshot (denoted $C_{t_i}$ in the figure above), run one-coarse-step simulation using the solver and save the output; these represent $\\hat{C}_{t_{i+1}}$.
+4. From each coarsened simulation snapshot (denoted $C_{t_i}$ in the figure above), run one-coarse-step simulation using the solver and save the output; these represent $C_{t_{i+1}}$.
 
 5. Calculate the correction needed at each step by comparing $C_{t_m}$ with $\hat{C}_{t_m}$.
 

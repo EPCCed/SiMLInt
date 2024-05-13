@@ -2,7 +2,7 @@
 
 Both the data generation as well as the model construction and training is very problem specific. However, there are steps needed to create a useful model that are applicable more generally. This section interleaves the general principles with technical instructions to build a suitable ML model.
 
-Often it is prohibitevly expensive to model a physical system at the resolution needed to actually resolve the simulation faithfully. One possible way to reduce the required compute is to simulate the domain at lower resolution, however, such simulations diverge from the realistic system evolution very quickly. Therefore, we support the coarse-grain simulation with a trained ML model that ensures that the two simulations do not diverge significantly. 
+Often it is prohibitevly expensive to model a physical system at the resolution needed to actually resolve the simulation faithfully. One possible way to reduce the required compute is to simulate the domain at lower resolution, however, such simulations diverge from the realistic system evolution very quickly. Therefore, we support the coarse-grain simulation with a trained ML model that ensures that the two simulations do not diverge significantly.
 
 ## Data Generation
 

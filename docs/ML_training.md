@@ -22,16 +22,22 @@ The step-by-step workflow below describes the data generation process in general
 
 5. Calculate the correction needed at each step by comparing $C_{t_m}$ with $\hat{C}_{t_m}$.
 
-6. Consider augmentation techniques to introduce more variability to the dataset -- note that this step requires a good understanding of the underlying domain as not all augmentation techniques make sense for some problems. This step can be implemented at the dataset creation level, or as an additional funcitonality of a data loader that provides data to the ML training. 
+6. Consider augmentation techniques to introduce more variability to the dataset -- note that this step requires a good understanding of the underlying domain as not all augmentation techniques make sense for some problems. This step can be implemented at the dataset creation level, or as an additional funcitonality of a data loader that provides data to the ML training.
 
 ## ML training
 
-It has been shown that [CNN-like neural network architectures](https://www.pnas.org/doi/full/10.1073/pnas.2101784118) are well suited to learn sub-grid scale information about fluid flows. The current model has few convolution layers and the output layer is equivalent in size to the input layer. Therefore, the model returns a field with matching dimensions to the workflow it was called from.
+It has been shown that CNN-like neural network architectures<sup>\[1\]</sup> are well suited to learn sub-grid scale information about fluid flows. The current model has few convolution layers and the output layer is equivalent in size to the input layer. Therefore, the model returns a field with matching dimensions to the workflow it was called from.
 
-Using the data generated as described above, and after having decided on a specific neural network architecture, the training can commence. As every ML training, there are many adjustable hyperparameters, such as batch size or learning rate. It is advisable to test several different combinations to understand the impact the hyperparameters have on the time-to-solution and the solution's quality, and to explore [early stopping](https://machinelearningmastery.com/how-to-stop-training-deep-neural-networks-at-the-right-time-using-early-stopping/).
+Using the data generated as described above, and after having decided on a specific neural network architecture, the training can commence. As every ML training, there are many adjustable hyperparameters, such as batch size or learning rate. It is advisable to test several different combinations to understand the impact the hyperparameters have on the time-to-solution and the solution's quality, and to explore early stopping<sup>\[2\]</sup>.
 
-Once the training concludes, the model needs to be exported in a format suitable for SmartSim, as it will be called by the orchestrator as part of the full workflow. 
+Once the training concludes, the model needs to be exported in a format suitable for SmartSim, as it will be called by the orchestrator as part of the full workflow.
 
 - Our implementation of ML training is described [here](training_implementation.md).
+
+## References
+
+[1] Kochkov, D., Smith, J.A., Alieva, A., Wang, Q., Brenner, M.P. and Hoyer, S., 2021. _Machine learning–accelerated computational fluid dynamics._ _Proceedings of the National Academy of Sciences_, _118_(21), p.e2101784118.
+
+[2] [https://machinelearningmastery.com/how-to-stop-training-deep-neural-networks-at-the-right-time-using-early-stopping/](https://machinelearningmastery.com/how-to-stop-training-deep-neural-networks-at-the-right-time-using-early-stopping/), _accessed 13/05/2024_.
 
 [< Back](./)

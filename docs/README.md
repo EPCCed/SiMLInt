@@ -4,7 +4,7 @@
 
 ## Background
 
-The SiMLInt workflow is currently based on [Learned Correction](https://www.pnas.org/doi/full/10.1073/pnas.2101784118)<sup>\[1\]</sup> (LC):
+The SiMLInt workflow is currently based on Learned Correction<sup>\[1\]</sup> (LC):
 
 The numerical solver is used to simulate a system, with adapted parameters so that the system is under-resolved due to the domain being decomposed to a coarser level than would be optimal. Beyond this, the execution of the simulation remains unchanged and can be parallelised as usual.
 

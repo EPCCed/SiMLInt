@@ -14,7 +14,7 @@ The following settings, modules and Python environment are required for all inst
 Go to the `/work` filesystem:
 
 ```shell
-export WORK=/work${HOME#/home}
+export WORK=${HOME/home/work}
 cd $WORK
 ```
 
@@ -68,6 +68,15 @@ Still in `$WORK/BOUT-dev`:
 ```shell
 MPICXX_CXX=icpc MPICXX=mpiicpc cmake . -B build -DBOUT_BUILD_EXAMPLES=on
 cmake --build build --target hasegawa-wakatani
+```
+
+### BOUT++ post-processing libraries
+
+To use Python for training data generation, we need the `boutdata` and `xbout` libraries. Install these into your existing environment:
+
+```shell
+pip install boutdata
+pip install xbout
 ```
 
 [< Back](./)

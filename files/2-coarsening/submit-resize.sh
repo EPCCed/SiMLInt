@@ -19,4 +19,4 @@ cd ${WORK}/data/extracted
 
 TRAJ_INDEX=$SLURM_ARRAY_TASK_ID
 OUTPUT_PATH=${TRAJ_INDEX}
-python resize_trajectory.py ${TRAJ_INDEX} ${OUTPUT_PATH}
+python ${SIMLINT_HOME}/files/2-coarsening/resize_trajectory.py ${TRAJ_INDEX} ${OUTPUT_PATH}

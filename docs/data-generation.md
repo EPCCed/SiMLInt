@@ -45,8 +45,7 @@ Following the structure given in the [general data generation](ML_training.md) c
     ```
 
     Submit the burn-in run:
-
-    ```shell
+    ```bash
     $ACCOUNT=x01
     cd files/1-data-generation/
     sbatch fine_init.sh --account $ACCOUNT
@@ -66,9 +65,8 @@ Following the structure given in the [general data generation](ML_training.md) c
 
 3. Coarsen selected simulation snapshots.
 
-    Fine-grained data must be coarsened to match the desired coarse-grained resolution. This can be done via interpolation for a general solution. Files in [files/2-coarsening](https://github.com/EPCCed/SiMLInt/tree/main/files/2-coarsening) perform this task. Submit `submit-resize.sh` via
-
-    ```shell
+    Fine-grained data must be coarsened to match the desired coarse-grained resolution. This can be done via interpolation for a general solution. Files in [files/2-coarsening](https://github.com/EPCCed/SiMLInt/tree/main/files/2-coarsening) perform this task. Submit `submit-resize.sh` via 
+    ```bash
     sbatch submit-resize.sh` --account $ACCOUNT
     ```
 

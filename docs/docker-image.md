@@ -11,6 +11,7 @@ Before you begin, make sure you have the following installed on your system:
 ## Building the Docker Image
 
 To pull the Docker image:
+
 ```shell
 docker pull ghcr.io/epcced/simlint:latest
 ```

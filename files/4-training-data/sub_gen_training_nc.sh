@@ -6,11 +6,15 @@
 #SBATCH --time=01:00:00
 #SBATCH --partition=standard
 #SBATCH --qos=standard
-#SBATCH --account=<account>
+#SBATCH --array=1-10
 
-eval "$(/work/x01/x01/$USER/miniconda3/bin/conda shell.bash hook)"
+export WORK=${HOME/home/work}
+
+eval "$(${WORK}/miniconda3/bin/conda shell.bash hook)"
 conda activate boutsmartsim
 
-TRAJECTORY=1
+TRAJ_INDEX=$SLURM_ARRAY_TASK_ID
+BASE_PATH=${WORK}/data/extracted/${TRAJ_INDEX}
+TRAINING_PATH=${WORK}/data/training
 
-python gen_training_nc.py $TRAJECTORY
+python gen_training_nc.py $TRAJ_INDEX $BASE_PATH $TRAINING_PATH

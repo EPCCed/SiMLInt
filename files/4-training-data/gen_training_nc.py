@@ -7,8 +7,8 @@ import xarray as xr
 from xbout import open_boutdataset
 from tqdm import tqdm, trange
 
-basedir = '//scratch/space1/x01/data/my-scratch-data'
-outdir = '/scratch/space1/x01/data/my-scratch-data/training/training_nc'
+basedir = sys.argv[2]
+outdir = sys.argv[3]
 
 def read_traj(traj):
     dvort0 = []

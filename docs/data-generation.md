@@ -83,9 +83,15 @@ Following the structure given in the [general data generation](ML_training.md) c
 
 5. Generating training data.
 
-    We now have all of the data required to train the ML models, but not in the format we require. Files in [files/4-training-data](../files/4-training-data) perform this task. Edit [files/4-training-data/](../files/4-training-data/sub_gen_training_nc.sh) and [files/4-training-data/gen_training_nc.py](../files/4-training-data/gen_training_nc.py) so that the paths work with your setup.
+    We now have all of the data required to train the ML models, but not in the format we require. Files in [files/4-training-data](../files/4-training-data) perform this task.
 
-    Note: paths are hardcoded in [files/4-training-data/gen_training_nc.py](../files/4-training-data/gen_training_nc.py), not read in from the command line.
+    Submit `sub_gen_training_nc.sh`:
+
+    ```shell
+    sbatch sub_gen_training_nc.sh --account $ACCOUNT
+    ```
+
+    As before, the SLURM array specification in `sub_gen_training_nc.sh` should match the selected number of trajectories.
 
 Subsequent steps: calculating the error and model training are covered in [ML model training implementation](training_implementation.md).
 

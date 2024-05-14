@@ -75,7 +75,7 @@ Following the structure given in the [general data generation](ML_training.md) c
 
 4. Single-timestep coarse simulations.
 
-    With the previous step having extracted fine-grained data for each time step (and each trajectory for which it was repeated), we now need to run a single-timestep coarse-grained simulation. To do this, see [files/3-coarse_simulations](../files/3-coarse_simulations/). Submitting [run_coarse_sims.sh](https://github.com/EPCCed/SiMLInt/tree/main/files/3-coarse_simulations/run_coarse_sims.sh) will run a single step simulation for each coarsened timestep created in the previous step:
+    With the previous step having extracted fine-grained data for each time step (and each trajectory for which it was repeated), we now need to run a single-timestep coarse-grained simulation. To do this, see [files/3-coarse-simulations](../files/3-coarse-simulations/). Submitting [run_coarse_sims.sh](https://github.com/EPCCed/SiMLInt/tree/main/files/3-coarse-simulations/run_coarse_sims.sh) will run a single step simulation for each coarsened timestep created in the previous step:
 
     ```shell
     sbatch run_coarse_sims.sh --account $ACCOUNT

@@ -28,7 +28,7 @@ do
   coarse_TRAJ_SIM_PATH=${BASE_PATH}/${i}/coarse_sim
   mkdir -p $coarse_TRAJ_SIM_PATH
   cp ${coarse_TRAJ_PATH}/BOUT.restart.* $coarse_TRAJ_SIM_PATH
-  cp ${SIMLINT_HOME}/3-coarse_simulations/coarse_BOUT.inp $coarse_TRAJ_SIM_PATH/BOUT.inp
+  cp ${SIMLINT_HOME}/3-coarse-simulations/coarse_BOUT.inp $coarse_TRAJ_SIM_PATH/BOUT.inp
 
   cd $coarse_TRAJ_SIM_PATH
 

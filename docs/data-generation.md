@@ -61,7 +61,7 @@ Following the structure given in the [general data generation](ML_training.md) c
 
     ```bash
     cd ${SIMLINT_HOME}/files/2-coarsening
-    sbatch submit-resize.sh` --account $ACCOUNT
+    sbatch submit-resize.sh --account $ACCOUNT
     ```
 
     Note: this operates an array job on all trajectories simultaneously. Edit 

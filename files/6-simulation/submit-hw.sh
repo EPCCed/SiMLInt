@@ -35,7 +35,7 @@ python start_db.py 6899 $model_vort $model_n
 echo "Started Redis"
 
 export SSDB=127.0.0.1:6899
-executable=${SIMLINT_HOME}/HW-error-correction/hasegawa-wakatani
+executable=${SIMLINT_HOME}/HW-error-correction/build/hasegawa-wakatani
 
 # Run the simulation
 srun -n 1 --distribution=block:block --hint=nomultithread $executable \

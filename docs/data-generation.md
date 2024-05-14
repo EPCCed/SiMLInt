@@ -1,4 +1,4 @@
-# SiMLInt Data Generation Implementation 
+# SiMLInt Data Generation Implementation
 
 Following the structure given in the [general data generation](ML_training.md) case, this page describes the data generation phase of our implementation for the Hasegawa-Wakatani example.
 

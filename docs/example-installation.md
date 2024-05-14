@@ -79,8 +79,6 @@ pip install boutdata
 pip install xbout
 ```
 
-[< Back](./)
-
 ## 2. SmartSim and SmartRedis
 
 ### Python/conda environment
@@ -115,5 +113,17 @@ make lib CC=icc CXX=icpc
 ```
 
 The install path is then available in `smartredis/install`. You will need to refer to this path later when you compile your simulation code with SmartSim (or the example).
+
+## 3. SiMLInt code
+
+Clone the SiMLInt repository:
+
+```shell
+git clone https://github.com/EPCCed/SiMLInt.git
+export SIMLINT_HOME=$(PWD)/SiMLInt
+export ACCOUNT=x01
+```
+
+Note: SiMLInt scripts rely on the environment variables $SIMLINT_HOME and $ACCOUNT.
 
 [< Back](./)

@@ -59,9 +59,10 @@ Following the structure given in the [general data generation](ML_training.md) c
 
 3. Coarsen selected simulation snapshots.
 
-    Fine-grained data must be coarsened to match the desired coarse-grained resolution. This can be done via interpolation for a general solution. Files in [files/2-coarsening](https://github.com/EPCCed/SiMLInt/tree/main/files/2-coarsening) perform this task. Submit `submit-resize.sh` via 
-    ```bash
-    sbatch submit-resize.sh` --account $ACCOUNT
+    Fine-grained data must be coarsened to match the desired coarse-grained resolution. This can be done via interpolation for a general solution. Files in [files/2-coarsening](https://github.com/EPCCed/SiMLInt/tree/main/files/2-coarsening) perform this task. Submit `submit-resize.sh` via
+
+    ```shell
+    sbatch submit-resize.sh --account $ACCOUNT
     ```
 
     Note: this operates an array job on all trajectories simultaneously. Edit
@@ -74,7 +75,11 @@ Following the structure given in the [general data generation](ML_training.md) c
 
 4. Single-timestep coarse simulations.
 
-    With the previous step having extracted fine-grained data for each time step (and each trajectory for which it was repeated), we now need to run a single-timestep coarse-grained simulation. To do this, see [files/3-coarse_simulations](../files/3-coarse_simulations/). Submitting [run_coarse_sims.sh](https://github.com/EPCCed/SiMLInt/tree/main/files/3-coarse_simulations/run_coarse_sims.sh) will run a single step simulation for each coarsened timestep created in the previous step.
+    With the previous step having extracted fine-grained data for each time step (and each trajectory for which it was repeated), we now need to run a single-timestep coarse-grained simulation. To do this, see [files/3-coarse_simulations](../files/3-coarse_simulations/). Submitting [run_coarse_sims.sh](https://github.com/EPCCed/SiMLInt/tree/main/files/3-coarse_simulations/run_coarse_sims.sh) will run a single step simulation for each coarsened timestep created in the previous step:
+
+    ```shell
+    sbatch run_coarse_sims.sh --account $ACCOUNT
+    ```
 
 5. Generating training data.
 

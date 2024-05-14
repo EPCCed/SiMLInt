@@ -17,4 +17,4 @@ TRAJ_INDEX=$SLURM_ARRAY_TASK_ID
 BASE_PATH=${WORK}/data/extracted/${TRAJ_INDEX}
 TRAINING_PATH=${WORK}/data/training
 
-python gen_training_nc.py $TRAJ_INDEX $BASE_PATH $TRAINING_PATH
+python ${SIMLINT_HOME}/files/4-training-data/gen_training_nc.py $TRAJ_INDEX $BASE_PATH $TRAINING_PATH

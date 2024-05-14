@@ -38,16 +38,10 @@ Following the structure given in the [general data generation](ML_training.md) c
 
     Before simulating the training data, a burn-in run must be conducted at the desired resolution. For an example of this, see [fine_init.sh](https://github.com/EPCCed/SiMLInt/tree/main/files/1-data-generation/fine_init.sh).
 
-    Clone the repository if you haven't already done this:
+    Submit the burn-in run:
 
     ```shell
-    git clone https://github.com/EPCCed/SiMLInt.git
-    ```
-
-    Submit the burn-in run:
-    ```bash
-    $ACCOUNT=x01
-    cd files/1-data-generation/
+    cd ${SIMLINT_HOME}/files/1-data-generation/
     sbatch fine_init.sh --account $ACCOUNT
     ```
 

@@ -5,9 +5,9 @@
 #SBATCH --nodes=1
 #SBATCH --tasks-per-node=1
 #SBATCH --cpus-per-task=1
-#SBATCH --array=1-10
 #SBATCH --partition=standard
 #SBATCH --qos=standard
+#SBATCH --array=1-10
 
 # activate conda environment for boutdata and xbout packages
 export WORK=${HOME/home/work}

@@ -24,6 +24,15 @@ The files in [files/5-training](https://github.com/EPCCed/SiMLInt/tree/main/file
 
     Two models are trained (one to correct vorticity and one to correct density) and frozen to file. Examples of these can be found in [files/models](https://github.com/EPCCed/SiMLInt/tree/main/files/models). These will be loaded into the SmartRedis database for use during simulations.
 
+4. Model location.
+
+    Model files produced should be placed in a folder for use in inference.
+
+    ```shell
+    mkdir ${WORK}/models
+    cp ${WORK}/data/training/model-hw-*.pb ${WORK}/models
+    ```
+
 The [next step](inference.md) is to run a simulation with LC using SmartSim, BOUT++ and TensorFlow, with inference from the newly trained model.
 
 [< Back](./)

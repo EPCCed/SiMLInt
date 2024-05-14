@@ -5,10 +5,13 @@
 #SBATCH --nodes=1
 #SBATCH --tasks-per-node=4
 #SBATCH --cpus-per-task=1
-
-#SBATCH --account=x01
 #SBATCH --partition=standard
 #SBATCH --qos=standard
+
+export WORK=${HOME/home/work}
+
+eval "$(${WORK}/miniconda3/bin/conda shell.bash hook)"
+conda activate boutsmartsim
 
 # Setup the job environment
 module load intel-20.4/mpi
@@ -21,20 +24,18 @@ module load netcdf-parallel/4.9.2-intel20-impi20
 #   using threading.
 export OMP_NUM_THREADS=1
 
-# activate conda environment for SmartSim and SmartRedis Python packages
-conda activate boutsmartsim
-
-cd /path/to/run/
+mkdir ${WORK}/run
+cd ${WORK}/run
 
 # Start the orchestrator and a new experiment which launches RedisAI for communication
 # Load the vorticity and density models from their files
-model_vort=/path/to/model-hw-20240427-164026-vort.pb
-model_n=/path/to/model-hw-20240427-210530-dens.pb
+model_vort=${WORK}/models/model-hw-20240427-164026-vort.pb
+model_n=${WORK}/models/model-hw-20240427-210530-dens.pb
 python start_db.py 6899 $model_vort $model_n
 echo "Started Redis"
 
 export SSDB=127.0.0.1:6899
-executable=/path/to/build/hasegawa-wakatani
+executable=${SIMLINT_HOME}/HW-error-correction/hasegawa-wakatani
 
 # Run the simulation
 srun -n 1 --distribution=block:block --hint=nomultithread $executable \

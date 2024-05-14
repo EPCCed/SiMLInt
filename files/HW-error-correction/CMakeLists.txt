@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.13)
 
 project(hasegawa-wakatani LANGUAGES CXX)
 
-set(SMARTREDIS_INSTALL_PATH /path/to/SmartRedis/install)
+set(SMARTREDIS_INSTALL_PATH $WORK/SmartRedis/install)
 find_library(SMARTREDIS_LIBRARY smartredis
              PATHS ${SMARTREDIS_INSTALL_PATH}/lib
              NO_DEFAULT_PATH REQUIRED

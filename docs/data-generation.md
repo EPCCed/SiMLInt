@@ -10,7 +10,7 @@ Following the structure given in the [general data generation](ML_training.md) c
 
 2. Generate a "fully resolved" simulation
 
-    The first step is to create a modified version of the Hasegawa-Wakatani example from BOUT++, which we'll copy to `/work/x01/x01/$USER/my-hw`.
+    The first step is to create a modified version of the Hasegawa-Wakatani example from BOUT++, which we'll copy to your work directory.
 
     ```shell
     # For full compatibility with the test simulations run during the SiMLInt project, the diffusive function is modified.
@@ -18,25 +18,43 @@ Following the structure given in the [general data generation](ML_training.md) c
     cd $WORK/my-hw
     sed -i 's/-Dn \* Delp4(n);/+Dn \* Delp2(n);/g' hw.cxx
     sed -i 's/-Dvort \* Delp4(vort);/+Dvort \* Delp2(vort);/g' hw.cxx
+    ```
 
-    # recompile
+    Compile the code.
+    ```
     module load intel-20.4/mpi
     module load intel-20.4/compilers
     module load fftw/3.3.10-intel20.4-impi20.4
     module load netcdf-parallel/4.9.2-intel20-impi20
     module load cmake
 
-    cmake . -B build -Dbout++_DIR=../BOUT-dev/build -DCMAKE_CXX_FLAGS=-std=c++17 -DCMAKE_BUILD_TYPE=Release
+    cmake . -B build -Dbout++_DIR=$WORK/BOUT-dev/build -DCMAKE_CXX_FLAGS=-std=c++17 -DCMAKE_BUILD_TYPE=Release
     cmake --build build --target hasegawa-wakatani
     ```
+
+    Before simulating the training data, a burn-in run must be conducted at the desired resolution. For an example of this, see [fine_init.sh](https://github.com/EPCCed/SiMLInt/tree/main/files/1-data-generation/fine_init.sh).
+
+    Clone the repository if you haven't already done this:
+    ```
+    git clone https://github.com/EPCCed/SiMLInt.git
+    ```
     
-    Before simulating the training data, a burn-in run must be conducted at the desired resolution. For an example of this, see [fine_init.sh](https://github.com/EPCCed/SiMLInt/tree/main/files/1-data-generation/fine_init.sh). Edit `<account>` on line 9 and `x01` in lines containing paths to match your `$WORK` and desired `/scratch` locations and submit via `sbatch fine_init.sh`.
+    Submit the burn-in run:
+    ```
+    $ACCOUNT=x01
+    cd files/1-data-generation/
+    sbatch fine_init.sh --account $ACCOUNT
+    ```
 
     Following that, we run a number of sequentially trajectories to generate fine-grained ground-truth data. See [fine_trajectories.sh](https://github.com/EPCCed/SiMLInt/tree/main/files/1-data-generation/fine_trajectories.sh)
 
-    The initial simulation produces "restart files", `/scratch/space1/x01/data/my-scratch-data/initial/data/BOUT.restart.*.nc` from which a simulation can be continued. Those, as well as the input file (`/scratch/space1/x01/data/my-scratch-data/initial/data/BOUT.inp` should be placed in `/scratch/space1/x01/data/my-scratch-data/0`.
+    The initial simulation produces "restart files" `BOUT.restart.*.nc` from which a simulation can be continued.
 
-    Edit line 17 (`for TRAJ_INDEX in {1..10}`) to give the desired number of trajectories. Edit `<account>` on line 9 and `x01` in lines containing paths for your project and submit via `sbatch fine_trajectories.sh`.
+    Edit `fine_trajectories.sh`
+    ```bash
+    for TRAJ_INDEX in {1..10}
+    ```
+    to give the desired number of trajectories.
 
 3. Coarsen selected simulation snapshots.
 

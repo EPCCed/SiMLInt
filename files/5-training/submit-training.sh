@@ -19,7 +19,8 @@ module load nvidia/cudnn/${CUDNN_VERSION}
 module load nvidia/tensorrt/${TENSORRT_VERSION}
 module load nvidia/nvhpc
 
-cd ${WORK}/data/training
+mkdir -p ${WORK}/models
+cd ${WORK}/models
 
 # choose appropriate parameters here
 # create a model each for vorticity and density error correction
@@ -30,4 +31,4 @@ python ${SIMLINT_HOME}/files/5-training/training.py --epochs 100 --batch-size 32
 
 # model the density error
 python ${SIMLINT_HOME}/files/5-training/training.py --epochs 100 --batch-size 32 --learning-rate 0.0001 \
-    --trajectories 10 --data-directory ${WORK}/data/training/ --variables n --task-id n
+    --trajectories 10 --data-directory ${WORK}/data/training/ --variables n --task-id dens

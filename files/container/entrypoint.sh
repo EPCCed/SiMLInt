@@ -13,4 +13,4 @@ conda activate "${_CONDA_DEFAULT_ENV}"
 export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
 export PATH=/simlint-bin:$PATH
 
-$@
+echo $@

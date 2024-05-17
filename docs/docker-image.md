@@ -36,21 +36,17 @@ To run the SiMLInt Docker image follow these steps:
 1. "Pure" BOUT++ Simulation: Run the following command:
 
     ```shell
-    docker run -v $SIMLINT_HOME/files/containerised-runs:/sim -v $SIMLINT_HOME/files/6-simulation:/6-sim \
-    ghcr.io/epcced/simlint:latest \
-    sh -c \
-    "cp /6-sim/BOUT.inp /sim/data/BOUT.inp && cp /sim/BOUT.restart.0.nc /sim/data/BOUT.restart.0.nc \
-    && mpirun -np 1 bout-hw"
+    cp $SIMLINT_HOME/files/6-simulation/BOUT.inp $SIMLINT_HOME/files/containerised-runs/data; \
+    cp $SIMLINT_HOME/files/containerised-runs/BOUT.restart.0.nc $SIMLINT_HOME/files/containerised-runs/data; \
+    docker run -v $SIMLINT_HOME/files/containerised-runs:/sim -u $(id -u):$(id -g) ghcr.io/epcced/simlint:latest mpirun -np 1 bout-hw nout=10
     ```
 
 2. Ground-truth simulation:
 
     ```shell
-    docker run -v $SIMLINT_HOME/files/containerised-runs:/sim -v $SIMLINT_HOME/files/6-simulation:/6-sim \
-    ghcr.io/epcced/simlint:latest \
-    sh -c \
-    "cp /6-sim/BOUT.inp /sim/data/BOUT.inp && cp /sim/BOUT.restart.0.nc /sim/data/BOUT.restart.0.nc \
-    && mpirun -np 1 gt-hw"
+    cp $SIMLINT_HOME/files/6-simulation/BOUT.inp $SIMLINT_HOME/files/containerised-runs/data; \
+    cp $SIMLINT_HOME/files/containerised-runs/BOUT.restart.0.nc $SIMLINT_HOME/files/containerised-runs/data; \
+    docker run -v $SIMLINT_HOME/files/containerised-runs:/sim -u $(id -u):$(id -g) ghcr.io/epcced/simlint:latest mpirun -np 1 gt-hw nout=10
     ```
 
     For these first two commands, the OpenMPI command `mpirun -n 1`, which instructs BOUT++ to use one processor only due to the format of the example input data, can be instructed to use *N* processors `mpirun -n N`, however appropriately decomposed input data must be provided.
@@ -58,13 +54,12 @@ To run the SiMLInt Docker image follow these steps:
 3. Inference runs:
 
     ```shell
-    docker run -v $SIMLINT_HOME/files/containerised-runs:/sim -v $SIMLINT_HOME/files/models:/models -v $SIMLINT_HOME/files/6-simulation:/6-sim \
-    ghcr.io/epcced/simlint:latest \
-    sh -c \
-    "cp /6-sim/BOUT.inp /sim/data/BOUT.inp && cp /sim/BOUT.restart.0.nc /sim/data/BOUT.restart.0.nc \
-    && python /start_db.py /models/model-hw-20240427-164026-vort.pb /models/model-hw-20240427-210530-dens.pb \
+    cp $SIMLINT_HOME/files/6-simulation/BOUT.inp $SIMLINT_HOME/files/containerised-runs/data && \
+    cp $SIMLINT_HOME/files/containerised-runs/BOUT.restart.0.nc $SIMLINT_HOME/files/containerised-runs/data && \
+    docker run -v $SIMLINT_HOME/files/containerised-runs:/sim -v $SIMLINT_HOME/files/models:/models -u $(id -u):$(id -g) ghcr.io/epcced/simlint:latest sh -c \
+    "python /start_db.py /models/model-hw-20240427-164026-vort.pb /models/model-hw-20240427-210530-dens.pb \
     && export SSDB=127.0.0.1:6899 \
-    && mpirun -np 1 smartsim-hw"
+    && mpirun -np 1 smartsim-hw nout=10"
     ```
 
 That's it! You have successfully built the SiMLInt Docker image and run it with a volume. Feel free to explore and modify the code inside the container as needed.

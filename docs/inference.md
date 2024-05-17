@@ -15,6 +15,15 @@ cmake . -B build -Dbout++_DIR=$WORK/BOUT-dev/build -DCMAKE_CXX_FLAGS=-std=c++17 
 cmake --build build --target hasegawa-wakatani
 ```
 
+Modify the job submission file [submit-hw.sh](https://github.com/EPCCed/SiMLInt/tree/main/files/5-simulation/submit-hw.sh) to reference the model files produced in the model training phase (step 5), for example:
+
+```shell
+model_vort=${WORK}/models/model-hw-20240427-164026-vort.pb
+model_n=${WORK}/models/model-hw-20240427-210530-dens.pb
+```
+
+The file name includes the timestamp when the model was trained and will be different in your example run.
+
 To run a simulation:
 
 ```shell

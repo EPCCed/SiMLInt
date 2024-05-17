@@ -9,7 +9,7 @@ USER root
 
 WORKDIR /
 
-COPY hw-vort-n /hw-vort-n
+COPY files/HW-error-correction /hw-vort-n
 
 RUN apt-get update && apt-get install -y \
     build-essential \
@@ -84,21 +84,20 @@ RUN $conda init && . $bashrc && conda activate boutsmartsim \
     && smart build --device cpu --no_pt
 
 RUN $conda init && . $bashrc && conda activate boutsmartsim \
-    && git clone https://github.com/CrayLabs/SmartRedis.git --branch v0.5.2 smartredis \
-    && cd smartredis \
+    && git clone https://github.com/CrayLabs/SmartRedis.git --branch v0.5.2 SmartRedis \
+    && cd SmartRedis \
     && make lib CC=mpicc CXX=mpicxx
 
 RUN $conda init && . $bashrc && conda activate boutsmartsim \
     && export PYTHONPATH=/BOUT-dev/build/tools/pylib:/BOUT-dev/tools/pylib:$PYTHONPATH \
-    && cd /hw-vort-n && cmake . -B build -Dbout++_DIR=../BOUT-dev/build -DCMAKE_BUILD_TYPE=Release \
+    && cd /hw-vort-n \
+    && sed -i 's/$WORK//g' CMakeLists.txt \
+    && cmake . -B build -Dbout++_DIR=../BOUT-dev/build -DCMAKE_BUILD_TYPE=Release \
     && cmake --build build --target hasegawa-wakatani -j 6 \
     && cp build/hasegawa-wakatani /simlint-bin/smartsim-hw \
     && chmod 777 /simlint-bin/smartsim-hw
 
-COPY entrypoint.sh /entrypoint.sh
-COPY start_db.py /start_db.py
-COPY sim /sim
-COPY coarse_input /coarse_input
+COPY files/container/entrypoint.sh /entrypoint.sh
 
 RUN chmod -R 777 /sim
 RUN chmod -R 777 /miniconda3

@@ -15,20 +15,26 @@ def read_traj(traj):
     dvort1 = []
     dn0 = []
     dn1 = []
+    dphi0 = []
+    dphi1 = []
     for i in trange(0, 1001):
         ds = open_boutdataset(
-                f'{basedir}/trajectory_{traj}/{i}/coarse_sim/BOUT.dmp.*.nc', 
+                f'{basedir}/{traj}/{i}/coarse_sim/BOUT.dmp.*.nc',
                 info=False)
         dvort0.append(ds['vort'][0,:,:,:])
         dvort1.append(ds['vort'][1,:,:,:])
         dn0.append(ds['n'][0,:,:,:])
         dn1.append(ds['n'][1,:,:,:])
+        dphi0.append(ds['phi'][0,:,:,:])
+        dphi1.append(ds['phi'][1,:,:,:])
     tvort0 = xr.concat(dvort0[1:], 't')
     tn0 = xr.concat(dn0[1:], 't')
+    tphi0 = xr.concat(dphi0[1:], 't')
     tvort1 = xr.concat(dvort1[:1001], 't')
     tn1 = xr.concat(dn1[:1001], 't')
-    d0 = xr.merge([tvort0,tn0])
-    d1 = xr.merge([tvort1,tn1])
+    tphi1 = xr.concat(dphi1[:1001], 't')
+    d0 = xr.merge([tvort0,tn0,tphi0])
+    d1 = xr.merge([tvort1,tn1,tphi0])
     return d0, d1
 
 def clean(ds):

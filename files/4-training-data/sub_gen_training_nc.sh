@@ -9,6 +9,7 @@
 #SBATCH --array=1-10
 
 export WORK=${HOME/home/work}
+SIMLINT_HOME=${WORK}/SiMLInt
 
 eval "$(${WORK}/miniconda3/bin/conda shell.bash hook)"
 conda activate boutsmartsim

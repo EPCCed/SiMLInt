@@ -99,7 +99,7 @@ RUN $conda init && . $bashrc && conda activate boutsmartsim \
 
 COPY files/container/entrypoint.sh /entrypoint.sh
 
-RUN chmod -R 777 /sim
+RUN mkdir /sim && chmod -R 777 /sim
 RUN chmod -R 777 /miniconda3
 
 RUN useradd -ms /bin/bash simlint

@@ -9,9 +9,10 @@
 #SBATCH --qos=standard
 #SBATCH --array=1-10
 
-# activate conda environment for boutdata and xbout packages
 export WORK=${HOME/home/work}
+SIMLINT_HOME=${WORK}/SiMLInt
 
+# activate conda environment for boutdata and xbout packages
 eval "$(${WORK}/miniconda3/bin/conda shell.bash hook)"
 conda activate boutsmartsim
 

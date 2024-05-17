@@ -29,6 +29,7 @@ cd ${WORK}/run
 
 # Start the orchestrator and a new experiment which launches RedisAI for communication
 # Load the vorticity and density models from their files
+# CHANGE PATHS BELOW TO POINT TO THE YOUR MODELS
 model_vort=${WORK}/models/model-hw-20240427-164026-vort.pb
 model_n=${WORK}/models/model-hw-20240427-210530-dens.pb
 python start_db.py 6899 $model_vort $model_n

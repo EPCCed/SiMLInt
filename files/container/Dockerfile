@@ -98,6 +98,7 @@ RUN $conda init && . $bashrc && conda activate boutsmartsim \
     && chmod 777 /simlint-bin/smartsim-hw
 
 COPY files/container/entrypoint.sh /entrypoint.sh
+COPY files/container/smartsim-hw.sh /simlint-bin/smartsim-hw.sh
 COPY files/6-simulation/start_db.py /start_db.py
 
 RUN mkdir -p /sim/data && chmod -R 777 /sim

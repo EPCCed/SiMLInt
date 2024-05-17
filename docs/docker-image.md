@@ -56,10 +56,9 @@ To run the SiMLInt Docker image follow these steps:
     ```shell
     cp $SIMLINT_HOME/files/6-simulation/BOUT.inp $SIMLINT_HOME/files/containerised-runs/data && \
     cp $SIMLINT_HOME/files/containerised-runs/BOUT.restart.0.nc $SIMLINT_HOME/files/containerised-runs/data && \
-    docker run -v $SIMLINT_HOME/files/containerised-runs:/sim -v $SIMLINT_HOME/files/models:/models -u $(id -u):$(id -g) ghcr.io/epcced/simlint:latest sh -c \
-    "python /start_db.py /models/model-hw-20240427-164026-vort.pb /models/model-hw-20240427-210530-dens.pb \
-    && export SSDB=127.0.0.1:6899 \
-    && mpirun -np 1 smartsim-hw nout=10"
+    docker run -v $SIMLINT_HOME/files/containerised-runs:/sim -v $SIMLINT_HOME/files/models:/models \
+    -u $(id -u):$(id -g) ghcr.io/epcced/simlint:latest \
+    smartsim-hw.sh 6899 /models/model-hw-20240427-164026-vort.pb /models/model-hw-20240427-210530-dens.pb 10
     ```
 
 That's it! You have successfully built the SiMLInt Docker image and run it with a volume. Feel free to explore and modify the code inside the container as needed.

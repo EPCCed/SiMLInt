@@ -11,23 +11,19 @@ def extract_array_data(file_path: str, args) -> np.ndarray:
   # number of ghost cells in x dimension
   gx = 2
   # extract vorticity and density without ghost cells and remove unit y direction
-  vort_array = np.squeeze(dataset.variables['vort'][:,gx:-gx,:,:])
-  dens_array = np.squeeze(dataset.variables['n'][:,gx:-gx,:,:])
+  var_arrays = []
+  for var in args.variables:
+      var_array = np.squeeze(dataset.variables[var][:,gx:-gx,:,:])
+      var_arrays.append(var_array)
   dataset.close()
 
-  if args.vort_only:
-    flow_image = np.stack([vort_array], axis=-1)
-  elif args.dens_only:
-    flow_image = np.stack([dens_array], axis=-1)
-  else:
-    flow_image = np.stack([vort_array, dens_array], axis=-1)
+  flow_image = np.stack(var_arrays, axis=-1)
   return flow_image
 
 def translate_augmentation(fields: Dict[str, tf.Tensor]) -> Dict[str, tf.Tensor]:
   coarse_image, error_image = fields['coarse'], fields['error']
-  #commented out for testing
-  #if coarse_image.shape != error_image.shape:
-   # raise ValueError(f"Coarse grained data and error should be same shape (got {coarse_image.shape} and {error_image.shape} respectively).")
+  if coarse_image.shape != error_image.shape:
+    raise ValueError(f"Coarse grained data and error should be same shape (got {coarse_image.shape} and {error_image.shape} respectively).")
   shape = tf.shape(coarse_image)
   nx, nz = shape[0], shape[1]
   shift_x = tf.random.uniform(shape=[], minval=0, maxval=nx-1, dtype=tf.int32)
@@ -57,10 +53,7 @@ def generate_augmented_dataset(
   coarse_grained_file_names: List[str],
   args,
 ) -> tf.data.Dataset:
-  if args.vort_only or args.dens_only:
-    channels = 1
-  else:
-    channels = 2
+  channels = len(args.variables)
   dataset = tf.data.Dataset.from_generator(
     lambda: data_generator(ground_truth_file_names, coarse_grained_file_names, args),
     output_signature={'coarse': tf.TensorSpec(shape=(None, None, channels), dtype=tf.float64),

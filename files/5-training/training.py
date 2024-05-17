@@ -14,31 +14,25 @@ import argparse
 tf.keras.utils.disable_interactive_logging()
 
 parser = argparse.ArgumentParser(description='Model training')
+parser.add_argument('-d', '--data-directory', required=True)
+parser.add_argument('-t', '--trajectories', type=int, required=True)
 parser.add_argument('-lr', '--learning-rate', type=float, required=True)
 parser.add_argument('-b', '--batch-size', type=int, required=True)
 parser.add_argument('-ep', '--epochs', type=int, required=True)
 parser.add_argument('-id', '--task-id', default='')
-parser.add_argument('--vort-only', action='store_true',)
-parser.add_argument('--dens-only', action='store_true',)
+parser.add_argument('-v', '--variables', nargs='+')
 args = parser.parse_args()
 
 # problem size
 Nx = 256
 Nz = 256
-if args.vort_only or args.dens_only:
-  channels = 1
-else:
-  channels = 2
+channels = len(args.variables)
 val_frac = 0.2
 
 samples_per_file = 1000 # to estimate train/val split
-data_location = '/scratch/space1/d175/amy/resize_again/training_data/'
-file_nums = list(range(1,33)) # [ x+1 for x in range(32) ]
+data_location = args.data_directory
+file_nums = list(range(1, args.trajectories))
 
-# training protocol
-#learning_rate = 1e-3
-#epochs = 2
-#batch_size = 32
 learning_rate = args.learning_rate
 epochs = args.epochs
 batch_size = args.batch_size
@@ -54,15 +48,10 @@ print(f'learning rate: {learning_rate}')
 print(f'epochs:        {epochs}')
 print(f'batch size:    {batch_size}')
 print(f'training run:  {trun_label}')
+print(f'data location: {data_location}')
 print(f'data files:    {file_nums}')
-print(f'channels:      {channels}', end='')
-if args.vort_only:
-  print(' (vort)')
-elif args.dens_only:
-  print(' (dens)')
-else:
-  print('')
-print('****************************************************')
+print(f'channels:      {channels} {args.variables}')
+print('****************************************************', flush=True)
 
 # compile model
 model = kochkov_cnn((Nx, Nz, channels))

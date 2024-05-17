@@ -19,8 +19,7 @@ module load nvidia/cudnn/${CUDNN_VERSION}
 module load nvidia/tensorrt/${TENSORRT_VERSION}
 module load nvidia/nvhpc
 
-mkdir -p ${WORK}/models
-cd ${WORK}/models
+cd ${WORK}/data/training
 
 # choose appropriate parameters here
 # create a model each for vorticity and density error correction

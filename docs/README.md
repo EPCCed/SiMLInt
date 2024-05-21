@@ -50,8 +50,8 @@ Instructions to recreate our implementation are linked below.
 4. [> SiMLInt ML Training Implementation](./training_implementation.md)
 5. [> SiMLInt Simulation](./inference.md)
 
-A [Docker container](https://github.com/orgs/EPCCed/packages/container/package/simlint), which can perform run BOUT Hasegawa-Wakatani simulations, generate ground-truth data, or run SiMLInt simulations with inference, has also been made available, with the SiMLInt components installed on an Ubuntu image using GCC, OpenMPI and Miniconda3. For Docker container usage instructions, click [here](docker-image.md).
+SiMLInt Docker images have been built for [CPU](https://github.com/orgs/EPCCed/packages/container/package/simlint) and [GPU](https://github.com/orgs/EPCCed/packages/container/package/simlint-gpu). The CPU version can perform run BOUT++ Hasegawa-Wakatani simulations, generate ground-truth data, or run SiMLInt simulations with inference, while the GPU version is intended for use in training ML models. For Docker container usage instructions, click [here](docker-images.md).
 
 ## References
 
-[1] Kochkov, D., Smith, J.A., Alieva, A., Wang, Q., Brenner, M.P. and Hoyer, S., 2021. _Machine learning–accelerated computational fluid dynamics._ _Proceedings of the National Academy of Sciences_, _118_(21), p.e2101784118.
+[1] Kochkov, D., Smith, J.A., Alieva, A., Wang, Q., Brenner, M.P. and Hoyer, S., 2021. *Machine learning–accelerated computational fluid dynamics.* *Proceedings of the National Academy of Sciences*, *118*(21), p.e2101784118.

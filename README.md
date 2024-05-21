@@ -1,4 +1,4 @@
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.11219582.svg)](https://doi.org/10.5281/zenodo.11219582) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.11219582.svg)](https://doi.org/10.5281/zenodo.11219582)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.11219582.svg)](https://doi.org/10.5281/zenodo.11219582) [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 Welcome to the SiMLInt project repository. You can reach us on simlint@mlist.is.ed.ac.uk, and more details about the project can be found on its website: [https://epcced.github.io/SiMLInt/](https://epcced.github.io/SiMLInt/).
 

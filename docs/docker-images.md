@@ -1,29 +1,36 @@
-# SiMLInt Docker Image
+# SiMLInt Docker Images
 
-A containerised version of SiMLInt that performs an example simulation with LC is provided via [SiMLInt Docker image](https://github.com/EPCCed/SiMLInt/pkgs/container/simlint).
+Containerised version of SiMLInt have been built for [CPU](https://github.com/EPCCed/SiMLInt/pkgs/container/simlint) and [GPU](https://github.com/EPCCed/SiMLInt/pkgs/container/simlint-gpu).
+
+The CPU image can be used to run simulations with and without LC, and to produce ground-truth data. The GPU image can be used to train ML models.
 
 ## Prerequisites
 
 Before you begin, make sure you have the following installed on your system:
 
+For both versions:
+
 - Docker: [Install Docker](https://docs.docker.com/get-docker/)
+
+For the GPU version:
+
+- NVIDIA Container Toolkit: [Installation Guide](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html)
 
 ## Building the Docker Image
 
 To pull the Docker image:
 
 ```shell
-docker pull ghcr.io/epcced/simlint:latest
+docker pull ghcr.io/epcced/simlint:v1.0.0
 ```
 
-Alternatively, to buid the Docker image:
+or
 
 ```shell
-cd $SIMLINT_HOME
-docker build -t simlint -f files/container/Dockerfile .
+docker pull ghcr.io/epcced/simlint-gpu:v1.0.0dev
 ```
 
-## Running the Docker Image
+## Running the SiMLInt (CPU) Image
 
 Before running, the `containerised-runs` folder must be writable by Docker:
 

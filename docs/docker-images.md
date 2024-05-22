@@ -72,9 +72,7 @@ That's it! You have successfully built the SiMLInt Docker image and run it with 
 
 <!-- 
 
-
 Running with Singularity is possible, but not optimised for the particular machine. Need to see how to connect it to ghcr.io.
-
 
 # Using SiMLInt with Singularity
 SiMLInt is available as a Docker image, with BOUT++, SmartSim and TensorFlow, and with an example Hasegawa-Wakatani simulation with and without inference available.

@@ -106,7 +106,7 @@ COPY files/container/entrypoint.sh /entrypoint.sh
 # COPY files/6-simulation/start_db.py /start_db.py
 
 # RUN mkdir -p /sim/data && chmod -R 777 /sim
-RUN chmod -R 777 /miniconda3
+# RUN chmod -R 777 /miniconda3
 
 # RUN useradd -ms /bin/bash simlint
 

@@ -50,7 +50,7 @@ Instructions to recreate our implementation are linked below.
 4. [> SiMLInt ML Training Implementation](./training_implementation.md)
 5. [> SiMLInt Simulation](./inference.md)
 
-SiMLInt Docker images have been built for [CPU](https://github.com/orgs/EPCCed/packages/container/package/simlint) and [GPU](https://github.com/orgs/EPCCed/packages/container/package/simlint-gpu). The CPU version can perform run BOUT++ Hasegawa-Wakatani simulations, generate ground-truth data, or run SiMLInt simulations with inference, while the GPU version is intended for use in training ML models (note: The [NVIDIA Container Toolkit](https://github.com/NVIDIA/nvidia-container-toolkit) is required to run CUDA images). For Docker container usage instructions, click [here](docker-images.md).
+SiMLInt Docker images have been built for [CPU](https://github.com/orgs/EPCCed/packages/container/package/simlint) (7.6 GB) and [GPU](https://github.com/orgs/EPCCed/packages/container/package/simlint-gpu) (17.1 GB). The CPU version can perform run BOUT++ Hasegawa-Wakatani simulations, generate ground-truth data, or run SiMLInt simulations with inference, while the GPU version is intended for use in training ML models (note: The [NVIDIA Container Toolkit](https://github.com/NVIDIA/nvidia-container-toolkit) is required to run CUDA images). For Docker container usage instructions, click [here](docker-images.md).
 
 ## References
 

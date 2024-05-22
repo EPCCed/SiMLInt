@@ -80,6 +80,9 @@ RUN $conda init && . $bashrc && conda activate boutsmartsim && pip install numpy
 #     && cp build/examples/hasegawa-wakatani/hasegawa-wakatani /simlint-bin/gt-hw \
 #     && chmod 777 /simlint-bin/gt-hw
 
+ARG CUDNN_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu
+ARG CUDNN_INCLUDE_PATH=/usr/include
+
 RUN $conda init && . $bashrc && conda activate boutsmartsim \
     && git lfs install \
     && python -m pip install smartsim\[ml\] \
@@ -103,7 +106,7 @@ RUN $conda init && . $bashrc && conda activate boutsmartsim \
 
 COPY files/container/entrypoint.sh /entrypoint.sh
 # COPY files/container/smartsim-hw.sh /simlint-bin/smartsim-hw.sh
-# COPY files/6-simulation/start_db.py /start_db.py
+COPY files/5-training/ /training
 
 # RUN mkdir -p /sim/data && chmod -R 777 /sim
 # RUN chmod -R 777 /miniconda3
@@ -111,9 +114,6 @@ COPY files/container/entrypoint.sh /entrypoint.sh
 # RUN useradd -ms /bin/bash simlint
 
 # USER simlint
-
-ARG CUDNN_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu
-ARG CUDNN_INCLUDE_PATH=/usr/include
 
 WORKDIR /
 

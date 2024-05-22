@@ -1,6 +1,6 @@
 # SiMLInt Docker Images
 
-Containerised version of SiMLInt have been built for [CPU](https://github.com/EPCCed/SiMLInt/pkgs/container/simlint) and [GPU](https://github.com/EPCCed/SiMLInt/pkgs/container/simlint-gpu).
+Containerised version of SiMLInt have been built for [CPU](https://github.com/EPCCed/SiMLInt/pkgs/container/simlint) (7.6 GB) and [GPU](https://github.com/EPCCed/SiMLInt/pkgs/container/simlint-gpu) (17.1 GB).
 
 The CPU image can be used to run simulations with and without LC, and to produce ground-truth data. The GPU image can be used to train ML models.
 
@@ -27,7 +27,7 @@ docker pull ghcr.io/epcced/simlint:v1.0.0
 or
 
 ```shell
-docker pull ghcr.io/epcced/simlint-gpu:v1.0.0dev
+docker pull ghcr.io/epcced/simlint-gpu:v1.0.0
 ```
 
 ## Running the SiMLInt (CPU) Image

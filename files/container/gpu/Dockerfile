@@ -112,6 +112,9 @@ COPY files/container/entrypoint.sh /entrypoint.sh
 
 # USER simlint
 
+ENV CUDNN_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu
+ENV CUDNN_INCLUDE_PATH=/usr/include
+
 WORKDIR /
 
 ENTRYPOINT [ "/entrypoint.sh" ]

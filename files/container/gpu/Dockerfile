@@ -1,4 +1,4 @@
-FROM nvidia/cuda:12.2.2-devel-ubuntu22.04
+FROM nvidia/cuda:12.2.2-cudnn8-devel-ubuntu22.04
 
 ENV CONDA_OVERRIDE_CUDA=12.2
 
@@ -57,28 +57,28 @@ ENV bashrc /root/.bashrc
 
 RUN $conda init && . $bashrc && conda activate boutsmartsim && pip install numpy cython zoidberg
 
-RUN git clone https://github.com/boutproject/BOUT-dev.git
+# RUN git clone https://github.com/boutproject/BOUT-dev.git
 
-RUN $conda init && . $bashrc && conda activate boutsmartsim \
-    && cd /BOUT-dev \
-    && MPICXX_CXX=mpicxx MPICXX=mpicc cmake . -B build  -DCMAKE_BUILD_TYPE=Release -DBOUT_BUILD_EXAMPLES=on \
-    && export PYTHONPATH=/BOUT-dev/build/tools/pylib:/BOUT-dev/tools/pylib:$PYTHONPATH \
-    && cmake --build build -j 6 \
-    && cmake --build build --target hasegawa-wakatani -j 6 \
-    && cp build/examples/hasegawa-wakatani/hasegawa-wakatani /simlint-bin/bout-hw \
-    && chmod 777 /simlint-bin/bout-hw
+# RUN $conda init && . $bashrc && conda activate boutsmartsim \
+#     && cd /BOUT-dev \
+#     && MPICXX_CXX=mpicxx MPICXX=mpicc cmake . -B build  -DCMAKE_BUILD_TYPE=Release -DBOUT_BUILD_EXAMPLES=on \
+#     && export PYTHONPATH=/BOUT-dev/build/tools/pylib:/BOUT-dev/tools/pylib:$PYTHONPATH \
+#     && cmake --build build -j 6 \
+#     && cmake --build build --target hasegawa-wakatani -j 6 \
+#     && cp build/examples/hasegawa-wakatani/hasegawa-wakatani /simlint-bin/bout-hw \
+#     && chmod 777 /simlint-bin/bout-hw
 
-RUN $conda init && . $bashrc && conda activate boutsmartsim \
-    && cd /BOUT-dev \
-    && rm -rf build \
-    && sed -i 's/-Dn \* Delp4(n);/+Dn \* Delp2(n);/g' examples/hasegawa-wakatani/hw.cxx \
-    && sed -i 's/-Dvort \* Delp4(vort);/+Dvort \* Delp2(vort);/g' examples/hasegawa-wakatani/hw.cxx \
-    && MPICXX_CXX=mpicxx MPICXX=mpicc cmake . -B build  -DCMAKE_BUILD_TYPE=Release -DBOUT_BUILD_EXAMPLES=on \
-    && export PYTHONPATH=/BOUT-dev/build/tools/pylib:/BOUT-dev/tools/pylib:$PYTHONPATH \
-    && cmake --build build -j 6 \
-    && cmake --build build --target hasegawa-wakatani -j 6 \
-    && cp build/examples/hasegawa-wakatani/hasegawa-wakatani /simlint-bin/gt-hw \
-    && chmod 777 /simlint-bin/gt-hw
+# RUN $conda init && . $bashrc && conda activate boutsmartsim \
+#     && cd /BOUT-dev \
+#     && rm -rf build \
+#     && sed -i 's/-Dn \* Delp4(n);/+Dn \* Delp2(n);/g' examples/hasegawa-wakatani/hw.cxx \
+#     && sed -i 's/-Dvort \* Delp4(vort);/+Dvort \* Delp2(vort);/g' examples/hasegawa-wakatani/hw.cxx \
+#     && MPICXX_CXX=mpicxx MPICXX=mpicc cmake . -B build  -DCMAKE_BUILD_TYPE=Release -DBOUT_BUILD_EXAMPLES=on \
+#     && export PYTHONPATH=/BOUT-dev/build/tools/pylib:/BOUT-dev/tools/pylib:$PYTHONPATH \
+#     && cmake --build build -j 6 \
+#     && cmake --build build --target hasegawa-wakatani -j 6 \
+#     && cp build/examples/hasegawa-wakatani/hasegawa-wakatani /simlint-bin/gt-hw \
+#     && chmod 777 /simlint-bin/gt-hw
 
 RUN $conda init && . $bashrc && conda activate boutsmartsim \
     && git lfs install \
@@ -92,26 +92,26 @@ RUN $conda init && . $bashrc && conda activate boutsmartsim \
     && cd SmartRedis \
     && make lib CC=mpicc CXX=mpicxx
 
-RUN $conda init && . $bashrc && conda activate boutsmartsim \
-    && export PYTHONPATH=/BOUT-dev/build/tools/pylib:/BOUT-dev/tools/pylib:$PYTHONPATH \
-    && cd /hw-vort-n \
-    && sed -i 's/$WORK//g' CMakeLists.txt \
-    && cmake . -B build -Dbout++_DIR=../BOUT-dev/build -DCMAKE_BUILD_TYPE=Release \
-    && cmake --build build --target hasegawa-wakatani -j 6 \
-    && cp build/hasegawa-wakatani /simlint-bin/smartsim-hw \
-    && chmod 777 /simlint-bin/smartsim-hw
+# RUN $conda init && . $bashrc && conda activate boutsmartsim \
+#     && export PYTHONPATH=/BOUT-dev/build/tools/pylib:/BOUT-dev/tools/pylib:$PYTHONPATH \
+#     && cd /hw-vort-n \
+#     && sed -i 's/$WORK//g' CMakeLists.txt \
+#     && cmake . -B build -Dbout++_DIR=../BOUT-dev/build -DCMAKE_BUILD_TYPE=Release \
+#     && cmake --build build --target hasegawa-wakatani -j 6 \
+#     && cp build/hasegawa-wakatani /simlint-bin/smartsim-hw \
+#     && chmod 777 /simlint-bin/smartsim-hw
 
 COPY files/container/entrypoint.sh /entrypoint.sh
-COPY files/container/smartsim-hw.sh /simlint-bin/smartsim-hw.sh
-COPY files/6-simulation/start_db.py /start_db.py
+# COPY files/container/smartsim-hw.sh /simlint-bin/smartsim-hw.sh
+# COPY files/6-simulation/start_db.py /start_db.py
 
-RUN mkdir -p /sim/data && chmod -R 777 /sim
+# RUN mkdir -p /sim/data && chmod -R 777 /sim
 RUN chmod -R 777 /miniconda3
 
 # RUN useradd -ms /bin/bash simlint
 
 # USER simlint
 
-WORKDIR /sim
+WORKDIR /
 
 ENTRYPOINT [ "/entrypoint.sh" ]

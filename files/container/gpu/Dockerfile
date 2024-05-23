@@ -31,7 +31,8 @@ RUN apt-get update && apt-get install -y \
     libopenmpi-dev \
     libxml++2.6-dev \
     gpustat \
-    libnvidia-ml-dev
+    libnvidia-ml-dev \
+    nvidia-driver-535
 
 RUN mkdir /miniconda3 && mkdir /simlint-bin && chmod 777 /miniconda3 && chmod 777 /simlint-bin
 RUN wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O /miniconda3/miniconda.sh

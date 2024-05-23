@@ -31,3 +31,7 @@ python ${SIMLINT_HOME}/files/5-training/training.py --epochs 100 --batch-size 32
 # model the density error
 python ${SIMLINT_HOME}/files/5-training/training.py --epochs 100 --batch-size 32 --learning-rate 0.0001 \
     --trajectories 10 --data-directory ${WORK}/data/training/ --variables n --task-id dens
+
+# model the electrostatic potential error
+python ${SIMLINT_HOME}/files/5-training/training.py --epochs 100 --batch-size 32 --learning-rate 0.0001 \
+    --trajectories 10 --data-directory ${WORK}/data/training/ --variables phi --task-id phi

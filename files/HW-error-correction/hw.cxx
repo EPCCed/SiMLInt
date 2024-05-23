@@ -131,8 +131,8 @@ protected:
       client->run_model("hw_model_n", {inKeyN}, {outKeyN});
 
       // unpack output tensor
-      std::vector<double> correctionVort(n_values, 0);
-      std::vector<double> correctionN(n_values, 0);
+      std::vector<float> correctionVort(n_values, 0);
+      std::vector<float> correctionN(n_values, 0);
       client->unpack_tensor(outKeyVort, correctionVort.data(), {n_values},
                             SRTensorTypeFloat, SRMemLayoutContiguous);
       client->unpack_tensor(outKeyN, correctionN.data(), {n_values},

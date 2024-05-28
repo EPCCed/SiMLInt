@@ -10,12 +10,15 @@ private:
   Field3D n, vort; // Evolving density and vorticity
   Field3D phi;     // Electrostatic potential
 
+  Field3D nCorrection, vortCorrection; // Corrections
+  bool addCorrection;
+
   // Model parameters
   BoutReal alpha;     // Adiabaticity (~conductivity)
   BoutReal kappa;     // Density gradient drive
   BoutReal Dvort, Dn; // Diffusion
   bool modified;      // Modified H-W equations?
-  bool addCorrection;
+  BoutReal dt;        // time step
 
   // Poisson brackets: b0 x Grad(f) dot Grad(g) / B = [f, g]
   // Method to use: BRACKET_ARAKAWA, BRACKET_STD or BRACKET_SIMPLE
@@ -33,17 +36,23 @@ protected:
     kappa = options["kappa"].withDefault(0.1);
     Dvort = options["Dvort"].withDefault(1e-2);
     Dn = options["Dn"].withDefault(1e-2);
+    auto& options_solver = Options::root()["solver"];
+    dt = options_solver["timestep"].withDefault(0.);
 
     modified = options["modified"].withDefault(false);
 
     SOLVE_FOR(n, vort);
     SAVE_REPEAT(phi);
+    SAVE_REPEAT(nCorrection, vortCorrection);
 
     // Split into convective and diffusive parts
     setSplitOperator();
 
     phiSolver = Laplacian::create();
     phi = 0.; // Starting phi
+
+    vortCorrection = 0.;
+    nCorrection = 0.;
 
     // Use default flags
 
@@ -88,7 +97,7 @@ protected:
     // output << "iteration  =     " << iter << std::endl;
     if (iter >= 0) {
       // output << "setting correction to true" << std::endl;
-      addCorrection = true;
+      addCorrection = true; // ensure that we do not correct in the integrator substeps -- this means we need to output at each full time step!
     }
     return 0;
   }
@@ -97,7 +106,14 @@ protected:
     // Non-stiff, convective part of the problem
 
     if (addCorrection) {
+      // Euler step for corrections-- as the correction must be coming *after* calling diffusive(...)
+      // we add it *before* the next evaluation of the complete "Physics-Step", that is both convective and dissipative terms
+      // this is ok as the corrections are initialised to zero, but when saving corrections may be out of sync by one step with n and vort
+      //       output << std::endl << "adding correction, dt=" << dt << std::endl;
+      vort += dt * vortCorrection;
+      n += dt * nCorrection;
 
+      // get n and vort corrections from CNN for the next time step
       size_t nx = mesh->xend - mesh->xstart + 1;
       size_t LocalNz = mesh->LocalNz;
       size_t n_values = 1 * nx * LocalNz * 1;
@@ -105,9 +121,9 @@ protected:
       std::vector<float> input_vort(n_values, 0);
       std::vector<float> input_n(n_values, 0);
 
-      for (int i = mesh->xstart, c=0; i <= mesh->xend; ++i) {
-        for (int j = mesh->ystart; j <= mesh->yend; ++j) {
-          for (int k = 0; k < LocalNz; ++k) {
+      for (size_t i = mesh->xstart, c=0; i <= mesh->xend; ++i) {
+        for (size_t j = mesh->ystart; j <= mesh->yend; ++j) {
+          for (size_t k = 0; k < LocalNz; ++k) {
             input_vort[c] = (float) vort(i,j,k);
             input_n[c] = (float) n(i,j,k);
             c++;
@@ -138,19 +154,39 @@ protected:
       client->unpack_tensor(outKeyN, correctionN.data(), {n_values},
                             SRTensorTypeFloat, SRMemLayoutContiguous);
 
+//      SRTensorType get_type;
+//      std::vector<size_t> get_dims;
+//      void* get_tensor;
+//      client->get_tensor(outKeyVort, get_tensor, get_dims, get_type, SRMemLayoutNested);
+//      output << "n_values = " << n_values << std::endl;
+//      output << "get tensor ";
+//      for (auto i: get_dims)
+//        output << i << " ";
+//      output << std::endl;
 
-      for (int i = mesh->xstart, c=0; i <= mesh->xend; ++i) {
-        for (int j = mesh->ystart; j <= mesh->yend; ++j) {
-          for (int k = 0; k < LocalNz; ++k) {
-            vort(i,j,k) = vort(i,j,k) + (double) correctionVort[c];
-            n(i,j,k) = n(i,j,k) + (double) correctionN[c];
+//      for (int i=0; i<n_values; i++) {
+//        correctionVort[i] = input_vort[i];
+//        correctionN[i] = input_n[i];
+//      }
+
+      for (size_t i = mesh->xstart, c=0; i <= mesh->xend; ++i) {
+//        output << i << " " << c << " " << input_vort[c] << " " << correctionVort[c] << std::endl;
+//        output << " get_tensor " << ((float****)get_tensor)[0][i-mesh->xstart][0][0];
+//        output << std::endl;
+        for (size_t j = mesh->ystart; j <= mesh->yend; ++j) {
+          for (size_t k = 0; k < LocalNz; ++k) {
+//            output << correctionVort[c] << " ";
+            vortCorrection(i,j,k) = (double) correctionVort[c];
+            nCorrection(i,j,k) = (double) correctionN[c];
             c++;
           }
+//          output << std::endl;
         }
       }
 
-      addCorrection = false;
+      addCorrection = false; // ensure that we do not correct in the integrator substeps -- this means we need to output at each full time step!
       // output << "setting correction to false" << std::endl;
+
     }
 
     // Solve for potential
@@ -162,16 +198,18 @@ protected:
     // Modified H-W equations, with zonal component subtracted from resistive coupling term
     Field3D nonzonal_n = n;
     Field3D nonzonal_phi = phi;
+
+
     if (modified) {
       // Subtract average in Y and Z
       nonzonal_n -= averageY(DC(n));
       nonzonal_phi -= averageY(DC(phi));
     }
 
-    ddt(n) =
-        -bracket(phi, n, bm) + alpha * (nonzonal_phi - nonzonal_n) - kappa * DDZ(phi);
-
+    
+    ddt(n) = -bracket(phi, n, bm) + alpha * (nonzonal_phi - nonzonal_n) - kappa * DDZ(phi);
     ddt(vort) = -bracket(phi, vort, bm) + alpha * (nonzonal_phi - nonzonal_n);
+
 
     return 0;
   }
@@ -187,3 +225,4 @@ protected:
 
 // Define a main() function
 BOUTMAIN(HW);
+

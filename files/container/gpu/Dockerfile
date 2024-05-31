@@ -1,6 +1,7 @@
 FROM nvidia/cuda:12.2.2-cudnn8-devel-ubuntu22.04
 
 ENV CONDA_OVERRIDE_CUDA=12.2
+ARG DEBIAN_FRONTEND=noninteractive
 
 LABEL org.opencontainers.image.source https://github.com/EPCCed/SiMLInt
 LABEL org.opencontainers.image.description="SiMLInt demo run of BOUT++ with learned correction."

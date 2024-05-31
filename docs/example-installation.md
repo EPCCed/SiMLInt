@@ -124,6 +124,6 @@ export SIMLINT_HOME=$(PWD)/SiMLInt
 export ACCOUNT=x01
 ```
 
-Note: SiMLInt scripts rely on the environment variables \$SIMLINT\_HOME and \$ACCOUNT.
+Note: SiMLInt scripts rely on the environment variables `$SIMLINT_HOME` and `$ACCOUNT`.
 
 [< Back](./)
